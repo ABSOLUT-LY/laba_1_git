@@ -91,6 +91,7 @@ T sum_arr(T *arr)
 }
 
 int main()
+
 {
     cin >> n;
     int *arr = new int[n];
