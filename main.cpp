@@ -54,6 +54,8 @@ bool valid(T *arr)
     return true;
 }
 
+
+
 template <typename T>
 T *input_arr(T *arr)
 {
