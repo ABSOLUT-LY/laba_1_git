@@ -98,9 +98,9 @@ public:
                 cout << "dimension greater than " << MAX_BUFF << " .Try again." << endl;
                 cin >> this->n;
             }
-            else if (n <= 0)
+            else if (n < 2)
             {
-                cout << "dimension lower than 1" << " .Try again." << endl;
+                cout << "dimension lower than 2" << " .Try again." << endl;
                 cin >> this->n;
             }
             else
@@ -132,6 +132,12 @@ private:
         cout << "Error, no negative elements" << endl;
     }
 
+    // сообщение о ошибке наличия негативных элементов
+    static void error_message_negative_count_lower_then_two()
+    {
+        cout << "Error, count of negative elements lower then two" << endl;
+    }
+
     // сообщение о ошибке расстояния между максимальным и минимальным элементами
     static void error_message_max_min_no_distance(int distance)
     {
@@ -154,6 +160,11 @@ private:
         if (not(negative_count))
         {
             error_message_negative_count(negative_count);
+            return false;
+        }
+        if (negative_count < 2)
+        {
+            error_message_negative_count_lower_then_two();
             return false;
         }
         return true;
