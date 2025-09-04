@@ -12,9 +12,6 @@
 
 using namespace std;
 
-// глобальная переменная размерности массива
-// int n;
-
 // класс для задания 1
 class Exercise_1
 {
@@ -70,6 +67,7 @@ public:
             cout << result_process_1[i] << " ";
         }
         cout << endl;
+        delete [] result_process_1;
     }
 
     // ФУНКЦИИ ДЛЯ ВВОДА ДАННЫХ
