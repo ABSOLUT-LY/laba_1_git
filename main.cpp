@@ -21,11 +21,16 @@ void homescreen_message()
         cout << endl
              << "Do you want return on main screen [Y/N]?" << endl;
         cin >> letter;
-             switch (letter)
+        switch (letter)
         {
         case 'Y':
             clear_terminal();
             return;
+
+        case 'N':
+            exit(0);
+        default:
+            cout << "Invalid choice. Try again." << endl;
         }
     }
 }

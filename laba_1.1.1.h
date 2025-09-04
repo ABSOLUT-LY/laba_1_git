@@ -51,6 +51,12 @@ public:
     {
         double *result_process_1 = this->actions_for_process_1();
 
+        if (result_process_1 == nullptr)
+        {
+            cout << "Operation failed: no negative elements found." << endl;
+            return; // Прерываем выполнение
+        }
+
         // Вывод количества отрицательных элементов
         cout << "Number of negative elements \t" << result_process_1[this->negative_count] << endl;
 
@@ -90,6 +96,11 @@ public:
             if (n > MAX_BUFF)
             {
                 cout << "dimension greater than " << MAX_BUFF << " .Try again." << endl;
+                cin >> this->n;
+            }
+            else if (n <= 0)
+            {
+                cout << "dimension lower than 1" << " .Try again." << endl;
                 cin >> this->n;
             }
             else
@@ -177,11 +188,10 @@ private:
             res[counter + 1] = count_negative;
             this->negative_count = count_negative;
             return res;
-            delete res;
         }
-        else{
-            double* res = new double[this->n];
-            return res;
+        else
+        {
+            return nullptr;
         }
     }
 
