@@ -46,7 +46,6 @@ public:
     void output_actions_for_process_1(double *result)
     {
         if (result == nullptr){
-            ConsoleUI::error_message_no_negative_elements();
             return;
         }
 

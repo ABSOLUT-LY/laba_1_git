@@ -138,10 +138,10 @@ public:
     static void output_res_process_1(double* result_process_1, int negative_count)
     {
         // Вывод количества отрицательных элементов
-        cout << "Number of negative elements \t" << result_process_1[negative_count] << endl;
+        cout << "Number of negative elements \t" << result_process_1[negative_count + 1] << endl;
 
         // Вывод суммы отрицательных элементов
-        cout << "Sum of negative elements \t" << result_process_1[negative_count + 1] << endl;
+        cout << "Sum of negative elements \t" << result_process_1[negative_count] << endl;
 
         // Вывод элементов массива
         cout << "Index of negative array elements: ";
