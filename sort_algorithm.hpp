@@ -1,5 +1,5 @@
 #include "array_processor.hpp" //импорт для проверок на валидность
-#pragma once                    // предотвращает многократное включение этого файла при импорте
+#pragma once                   // предотвращает многократное включение этого файла при импорте
 // класс содержащий в себе алгоритмы сортировки
 
 /*Здесь хранятся только алгоритмы сортировки*/
@@ -10,7 +10,11 @@ public:
     // функция вызова сортировки
     static double *quick_sort(double *arr_for_sort, int n)
     {
-        double *result = arr_for_sort;                      // копируем начальным массив
+        double *result = new double[n]; // копируем начальным массив
+        for (int i = 0; i < n; i++)
+        {
+            result[i] = arr_for_sort[i];
+        }
         SortAlgorithm::quick_sort_method(result, 0, n - 1); // вызываем сортировку
         return result;                                      // возвращаем новый массив не меняя старого
     }
@@ -48,7 +52,7 @@ private:
             }
         }
         // проверка, чтобы указатели на индексы не выходили за границы, если будут равны, то массив из одного элемента - действий не требуется
-        if (j > low) 
+        if (j > low)
             SortAlgorithm::quick_sort_method(array, low, j);
         if (i < high)
             SortAlgorithm::quick_sort_method(array, i, high);
