@@ -43,4 +43,14 @@ class ArrayProcessor{
         return true;
     }
 
+    static bool valid_array_no_null(double* arr){
+        if (arr == nullptr){
+            return false;
+        }
+        return true;
+    }
+
+    static bool valid_result_for_output_process_1(double* result_of_process_1){
+        return valid_array_no_null(result_of_process_1);
+    }
 };

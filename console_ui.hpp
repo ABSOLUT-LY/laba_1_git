@@ -37,22 +37,25 @@ public:
         while (true)
         {
             cout << endl
-                << "Do you want return on main screen [Y/N]?" << endl;
+                 << "Do you want return on main screen [Y/N]?" << endl;
             cin >> letter;
             switch (letter)
             {
             case 'Y':
                 clear_terminal();
                 return;
-
+            case 'y':
+                clear_terminal();
+                return;
             case 'N':
+                exit(0);
+            case 'n':
                 exit(0);
             default:
                 cout << "Invalid choice. Try again." << endl;
             }
         }
     }
-
 
     // отрисовка начального экрана
     static void message_homescreen()
@@ -122,7 +125,7 @@ public:
     }
 
     // Ввод элементов массива
-    static double* get_array_elements(int n)
+    static double *get_array_elements(int n)
     {
         double *arr = new double[n];
         cout << "Enter the array elements (separated by enter):" << endl;
@@ -135,7 +138,7 @@ public:
     }
 
     // ФУНКЦИИ ДЛЯ ВЫВОДА РЕЗУЛЬТАТОВ РАБОТЫ ПРОЦЕССОВ
-    static void output_res_process_1(double* result_process_1, int negative_count)
+    static void output_res_process_1(double *result_process_1, int negative_count)
     {
         // Вывод количества отрицательных элементов
         cout << "Number of negative elements \t" << result_process_1[negative_count + 1] << endl;

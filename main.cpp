@@ -27,9 +27,16 @@ private:
         ex_1.get_validated_array_dimension();
         ConsoleUI::clear_terminal();
         ex_1.get_validated_array();
-        // ConsoleUI::clear_terminal();
-        ex_1.output_actions_for_process_1(ex_1.get_arr());
-        ConsoleUI::homescreen_message();
+        if (ArrayProcessor::valid_result_for_output_process_1(ex_1.calculate_result_for_process_1()))
+        {
+            // ConsoleUI::clear_terminal();
+            ConsoleUI::output_res_process_1(ex_1.calculate_result_for_process_1(), ex_1.get_negative_count());
+            ConsoleUI::homescreen_message();
+        }
+        else
+        {
+            ConsoleUI::homescreen_message();
+        }
     }
 
     // функция для действия 2 задания 1 в терминале

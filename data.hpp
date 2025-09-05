@@ -42,22 +42,18 @@ public:
         return res;
     }
 
-    // вывод резултата процесса 1
-    void output_actions_for_process_1(double *result)
+    // посчет результата процесса 1
+    double *calculate_result_for_process_1()
     {
-        if (result == nullptr){
-            return;
+        if (ArrayProcessor::valid_array_no_null(this->arr))
+        {
+            double *result_process_1 = this->actions_for_process_1();
+            return result_process_1;
         }
-
-        double *result_process_1 = this->actions_for_process_1();
-
-        // if (result_process_1 == nullptr)
-        // {
-        //     ConsoleUI::error_message_no_negative_elements();
-        //     return; // Прерываем выполнение
-        // }
-        
-        ConsoleUI::output_res_process_1(result_process_1,this->negative_count);
+        else{
+            return nullptr;
+        }
+        // ConsoleUI::output_res_process_1(result_process_1,this->negative_count);
     }
 
     // ввод и проверка на валидность размерности массива
