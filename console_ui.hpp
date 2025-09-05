@@ -39,6 +39,13 @@ public:
         cout << "Select and enter the number of the operation you need:" << "\t";
     }
 
+    // отрисовка экарана задания 3
+    static void message_exercise_3_screen()
+    {
+        cout << "";
+    }
+
+
     // диалог для возврата на главный экран
     static void want_to_homescreen_message_dialog()
     {
@@ -82,11 +89,13 @@ public:
         cout << "Correct" << endl;
     }
 
+    // сообщение о вооде размерности массива
     static void message_input_dimension_array()
     {
         cout << "Enter the array dimension (no more than " << Constants::MAX_BUF << "):" << endl;
     }
 
+    // сообщение о вводе жлементов масиива
     static void message_input_array_elements()
     {
         cout << "Enter the array elements (separated by enter):" << endl;
@@ -128,10 +137,16 @@ public:
         cout << "Dimension greater than maximum buff" << endl;
     }
 
-    // сообщение о ошибке размерность мнее 2
+    // сообщение о ошибке размерность мене 2
     static void error_message_dimension_lower_than_2()
     {
         cout << "Dimension lower than 2" << endl;
+    }
+
+    // сообщение о ошибке размерность мене 1
+    static void error_message_dimension_lower_than_1()
+    {
+        cout << "Dimension lower than 1" << endl;
     }
 
     // ввод размернсоти
@@ -171,5 +186,15 @@ public:
         }
         cout << endl;
         delete[] result_process_1; // очситка памяти после исопльзования
+    }
+
+    static void output_res_process_2(double *result_process_2, int n)
+    {
+        cout << "Sorted array using Quicksort method: ";
+        for (int i = 0; i < n; i++)
+        {
+            cout << result_process_2[i] << " ";
+        }
+        cout << endl;
     }
 };

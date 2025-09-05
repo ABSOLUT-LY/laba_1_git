@@ -27,10 +27,10 @@ private: // методы доступные внутри класса
     {
         ConsoleUI::clear_terminal();                                   // очищаем терминал перед работой
         ConsoleUI::message_input_dimension_array();                    // вывод собщения о вводе размерности
-        ex_1.get_validated_array_dimension();                          // вызывает ввод размерности массива для экземпляра класса.Д
+        ex_1.get_validated_array_dimension_for_sum();                  // вызывает ввод размерности массива для экземпляра класса.Д
         ConsoleUI::clear_terminal();                                   // очищаем терминал для следующего сообщения
         ConsoleUI::message_input_array_elements();                     // вывод сообщщения о вводе элементов массива
-        ex_1.get_validated_array();                                    // вызывае тввод элементов массива для экхемпляра класса
+        ex_1.get_validated_array_for_sum();                            // вызывае тввод элементов массива для экхемпляра класса
         double *result = ex_1.calculate_result_for_process_1();        // высчитываем результат действия первого: или массив или nullptr
         if (ArrayProcessor::valid_result_for_output_process_1(result)) // проверяем на валидность если массив - валидно
         {
@@ -53,6 +53,15 @@ private: // методы доступные внутри класса
     // функция для действия 3 задания 1 в терминале
     void process_3_terminal()
     {
+        ConsoleUI::clear_terminal();                              // очищаем терминал перед работой
+        ConsoleUI::message_input_dimension_array();               // вывод собщения о вводе размерности
+        ex_1.get_validated_array_dimension_for_sort();            // вызывает ввод размерности массива для экземпляра класса
+        ConsoleUI::clear_terminal();                              // очищаем терминал для следующего сообщения
+        ConsoleUI::message_input_array_elements();                // вывод сообщщения о вводе элементов массива
+        ex_1.get_validated_array_for_sort();                      // вызывае тввод элементов массива для экхемпляра класса
+        double *result = ex_1.sort_array();                       // высчитываем результат действия первого: или массив или nullptr
+        ConsoleUI::output_res_process_2(result, ex_1.get_size()); // вызов функции консоли для вывода результата
+        ConsoleUI::want_to_homescreen_message_dialog();           // диалог о возврщении на главный экран
     }
 
     // задание 1
@@ -71,15 +80,22 @@ private: // методы доступные внутри класса
                 return;               // выход из While и switch - конец выполнения функции
             case 2:                   // к == 2 действие 2
                 /*ЗДЕСЬ ПОТОМ ДАПИСАТЬ ВТОРОЕ ДЕЙСТВИЕ*/
-                return; // выход из While и switch - конец выполнения функции
-            case 3:     // к == 3 - действие 3
-                /*ЗДЕСЬ ПОТОМ ДАПИСАТЬ ТРЕТЬЕ ДЕЙСТВИЕ*/
+                return;                                              // выход из While и switch - конец выполнения функции
+            case 3:                                                  // к == 3 - действие 3
+                process_3_terminal();                                // запуск действия 3
                 return;                                              // выход из While и switch - конец выполнения функции
             default:                                                 // Нет такого действия
                 ConsoleUI::error_message_invalid_operation_number(); // вывод сообщения о ошибке номера операции
                 break;                                               // выход из switch и вход назад в while
             }
         }
+    }
+
+    // задание 3
+    void screen_exercise_3_terminal() // экран выбора действия в задании 3
+    {
+        ConsoleUI::clear_terminal(); // очистка терминала перед началом работы
+        process_3_terminal();        // запуск действия 3
     }
 
     // создание начального экрана

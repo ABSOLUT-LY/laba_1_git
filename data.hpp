@@ -1,5 +1,6 @@
 #include "common_constants.hpp" // импорт для namespace contains
 #include "array_processor.hpp"  // импорт для проверки данных на валидность
+#include "sort_algorithm.hpp"   // для доступа к алгоритмам сортировки
 #pragma once                    // предотвращает многократное включение этого файла при импорте
 
 /*Здесь хранятся только методы работы с данными класса и данные класса*/
@@ -55,13 +56,13 @@ public: // доступно вне класса
         }
     }
 
-    // ввод и проверка на валидность размерности массива
-    void get_validated_array_dimension()
+    // ввод и проверка на валидность размерности массива для суммы
+    void get_validated_array_dimension_for_sum()
     {
         while (true) // пока ввод размерности не будет правильным
         {
-            int size = ConsoleUI::get_array_size();     // запрос раземерности у интерфейса
-            if (ArrayProcessor::valid_array_size(size)) // проверка размернсоти на валидность
+            int size = ConsoleUI::get_array_size();             // запрос раземерности у интерфейса
+            if (ArrayProcessor::valid_array_size_for_sum(size)) // проверка размернсоти на валидность
             {
                 this->n = size; // если валидный -присваиваем
                 return;         // выходим из цикла и функции
@@ -69,11 +70,42 @@ public: // доступно вне класса
         }
     }
 
-    // ввод и проверка массива
-    void get_validated_array()
+    // ввод и проверка на валидность размерности массива для сортировки
+    void get_validated_array_dimension_for_sort()
+    {
+        while (true) // пока ввод размерности не будет правильным
+        {
+            int size = ConsoleUI::get_array_size();              // запрос раземерности у интерфейса
+            if (ArrayProcessor::valid_array_size_for_sort(size)) // проверка размернсоти на валидность
+            {
+                this->n = size; // если валидный -присваиваем
+                return;         // выходим из цикла и функции
+            }
+        }
+    }
+
+    // ввод и проверка массива для суммы
+    void get_validated_array_for_sum()
     {
         double *arr = ConsoleUI::get_array_elements(n);     // запрос у интерфейса элементов массива
         if (ArrayProcessor::valid_for_negative_sum(arr, n)) // проверка массива на валидность
+        {
+            this->arr = arr; // присваиваем
+            return;          // выходим из функции
+        }
+        else
+        {
+            delete[] arr;        // очизаем память если не валидный
+            this->arr = nullptr; // присваиваем Nullptr если не валидный
+            return;              // выходим из функции
+        }
+    }
+
+    // ввод и проверка массива для сортировки
+    void get_validated_array_for_sort()
+    {
+        double *arr = ConsoleUI::get_array_elements(n);     // запрос у интерфейса элементов массива
+        if (ArrayProcessor::valid_for_sort(arr)) // проверка массива на валидность
         {
             this->arr = arr; // присваиваем
             return;          // выходим из функции
@@ -96,5 +128,11 @@ public: // доступно вне класса
     int get_negative_count() const
     {
         return this->negative_count; // возвращаем количество отрицатльных элементов
+    }
+
+    // функция для сортировки массива
+    double *sort_array()
+    {
+        return SortAlgorithm::quick_sort(this->arr, this->n);
     }
 };
