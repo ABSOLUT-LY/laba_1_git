@@ -22,6 +22,7 @@ class ArrayProcessor{
     // проверка на валидоность массива
     static bool valid_for_negative_sum(double* arr, int n)
     {
+        if (arr == nullptr) return false;
         int negative_count = 0;
         for (int i = 0; i < n; i++)
         {

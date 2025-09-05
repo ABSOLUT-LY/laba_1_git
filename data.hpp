@@ -84,12 +84,12 @@ public:
         }
     }
 
-    int get_size()
+    int get_size() const
     {
         return this->n;
     }
 
-    int get_negative_count()
+    int get_negative_count() const
     {
         return this->negative_count;
     }
