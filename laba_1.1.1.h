@@ -67,7 +67,7 @@ public:
             cout << result_process_1[i] << " ";
         }
         cout << endl;
-        delete [] result_process_1;
+        delete[] result_process_1;
     }
 
     // ФУНКЦИИ ДЛЯ ВВОДА ДАННЫХ
@@ -116,31 +116,6 @@ private:
     double *arr;
     int negative_count; // дял понимания ращмерности выходного массива
 
-    // ФУНКЦИИ ДЛЯ ОШИБОК
-
-    // Пример функции для сообщения о ошибке
-    // void error_message_{причина ошибки}()
-    // {
-    //     cout << "Ошибка,..." << endl;
-    // }
-
-    // сообщение о ошибке наличия негативных элементов
-    static void error_message_negative_count(int nc)
-    {
-        cout << "Error, no negative elements" << endl;
-    }
-
-    // сообщение о ошибке наличия негативных элементов
-    static void error_message_negative_count_lower_then_two()
-    {
-        cout << "Error, count of negative elements lower then two" << endl;
-    }
-
-    // сообщение о ошибке расстояния между максимальным и минимальным элементами
-    static void error_message_max_min_no_distance(int distance)
-    {
-        cout << "Error, distance between max and min elements " << distance << " expected 2 or more" << endl;
-    }
 
     // ФУНКЦИИ ДЛЯ РАБОТЫ С ДАННЫМИ
 
