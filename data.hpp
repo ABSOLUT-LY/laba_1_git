@@ -1,70 +1,70 @@
-#include <iostream>
-#include "common_constants.hpp" // импор для namespace contains
-#include "array_processor.hpp"
-#pragma once
+#include "common_constants.hpp" // импорт для namespace contains
+#include "array_processor.hpp"  // импорт для проверки данных на валидность
+#pragma once                    // предотвращает многократное включение этого файла при импорте
 
-using namespace std;
+/*Здесь хранятся только методы работы с данными класса и данные класса*/
 
-class Data
+class Data // класс для работы и харнения данных
 {
-private:
+private:                    // доступно только внутри класса
     int n;                  // размерность массива
     double *arr;            // массив
     int negative_count = 0; // колчиество отрицтальных элементов
 
-public:
+public: // доступно вне класса
     // функция нахождения суммы, индексов и колчества отрицательных элементов
     double *actions_for_process_1()
     {
-        double sum = 0;
-        int count_negative = 0;
-        for (int i = 0; i < this->n; i++)
+        double sum = 0;                   // сумма отрицательных элементов
+        int count_negative = 0;           // колчество отрицательных элементов
+        for (int i = 0; i < this->n; i++) // цикл для прохода по всему массиву
         {
-            if (this->arr[i] < 0)
+            if (this->arr[i] < 0) // если отрицательных
             {
-                count_negative++;
-                sum += arr[i];
+                count_negative++; // +колчиество отрицтальеных
+                sum += arr[i];    // + к сумме отрицательных
             }
         }
-        double *res = new double[count_negative + 2];
-        int counter = 0; // счётчик количества элементов массива res
-        for (int i = 0; i < this->n; i++)
+        double *res = new double[count_negative + 2]; // выходной маасив из индексов отрицталеьных элементов на 2 элементаа более так как написано снизу
+        int counter = 0;                              // счётчик количества элементов массива res
+        for (int i = 0; i < this->n; i++)             // снова проходимя по массиву
         {
-            if (this->arr[i] < 0)
+            if (this->arr[i] < 0) // если отрицательный
             {
-                res[counter] = i;
-                counter++;
+                res[counter] = i; // записываем индекс отрицательного элемента
+                counter++;        // увеличиваем количество отрицательных элементов
             }
         }
-        res[counter] = sum;                // предпоследний элемент - сумма
-        res[counter + 1] = count_negative; // последний - колчиество
-        this->negative_count = count_negative;
-        return res;
+        res[counter] = sum;                    // предпоследний элемент - сумма
+        res[counter + 1] = count_negative;     // последний - колчиество
+        this->negative_count = count_negative; // запеисываем колчиество отрицательных элементов - понадобится для вывода
+        return res;                            // возвращаем массив
     }
 
-    // посчет результата процесса 1
+    // подсчет результата процесса 1
     double *calculate_result_for_process_1()
     {
-        if (ArrayProcessor::valid_array_no_null(this->arr))
+        if (ArrayProcessor::valid_array_no_null(this->arr)) // если массив является валидным
         {
-            double *result_process_1 = this->actions_for_process_1();
-            return result_process_1;
+            double *result_process_1 = this->actions_for_process_1(); // выполняем действия процесса 1
+            return result_process_1;                                  // возвращаем резульатат действия выше
         }
-        else{
-            return nullptr;
+        else
+        {
+            return nullptr; // если не корректен - nullptr
         }
     }
 
     // ввод и проверка на валидность размерности массива
     void get_validated_array_dimension()
     {
-        while (true)
+        while (true) // пока ввод размерности не будет правильным
         {
-            int size = ConsoleUI::get_array_size();
-            if (ArrayProcessor::valid_array_size(size))
+            int size = ConsoleUI::get_array_size();     // запрос раземерности у интерфейса
+            if (ArrayProcessor::valid_array_size(size)) // проверка размернсоти на валидность
             {
-                this->n = size;
-                return;
+                this->n = size; // если валидный -присваиваем
+                return;         // выходим из цикла и функции
             }
         }
     }
@@ -72,25 +72,29 @@ public:
     // ввод и проверка массива
     void get_validated_array()
     {
-        double *arr = ConsoleUI::get_array_elements(n);
-        if (ArrayProcessor::valid_for_negative_sum(arr, n))
+        double *arr = ConsoleUI::get_array_elements(n);     // запрос у интерфейса элементов массива
+        if (ArrayProcessor::valid_for_negative_sum(arr, n)) // проверка массива на валидность
         {
-            this->arr = arr;
+            this->arr = arr; // присваиваем
+            return;          // выходим из функции
         }
         else
         {
-            delete[] arr;
-            this->arr = nullptr;
+            delete[] arr;        // очизаем память если не валидный
+            this->arr = nullptr; // присваиваем Nullptr если не валидный
+            return;              // выходим из функции
         }
     }
 
+    // получение размернсоти массива без возможности изменять
     int get_size() const
     {
-        return this->n;
+        return this->n; // возвращает размерность массива
     }
 
+    // получение количества отрицательных элементов без возможности их изенения
     int get_negative_count() const
     {
-        return this->negative_count;
+        return this->negative_count; // возвращаем количество отрицатльных элементов
     }
 };

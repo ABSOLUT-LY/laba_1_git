@@ -1,10 +1,14 @@
-#include <iostream>
+#include <iostream>             // ввыод/вывод
 #include "common_constants.hpp" // импор для namespace contains
-#pragma once
+#pragma once                    // предотвращает многократное включение этого файла при импорте
 
-using namespace std;
+using namespace std; // для cin и cout
 
-class ConsoleUI
+/*Статические методы - можно использовать без экзмепляра класса и не имеют доступа к this*/
+
+/*Здесь хранятся только сообщения для ввода и вывода никакой логики*/
+
+class ConsoleUI // класс для работы с консольным интерфейсом
 {
 public:
     // Очистка терминала
@@ -21,6 +25,11 @@ public:
     //     cout << "Ошибка,..." << endl;
     // }
 
+    static void error_message_invalid_operation_number()
+    {
+        cout << "Invalid operation number. Try again:" << "\t";
+    }
+
     // отрисовка экарана задания 1
     static void message_exercise_1_screen()
     {
@@ -31,7 +40,7 @@ public:
     }
 
     // диалог для возврата на главный экран
-    static void homescreen_message()
+    static void want_to_homescreen_message_dialog()
     {
         char letter;
         while (true)
@@ -71,6 +80,16 @@ public:
     static void message_correct_dimension()
     {
         cout << "Correct" << endl;
+    }
+
+    static void message_input_dimension_array()
+    {
+        cout << "Enter the array dimension (no more than " << Constants::MAX_BUF << "):" << endl;
+    }
+
+    static void message_input_array_elements()
+    {
+        cout << "Enter the array elements (separated by enter):" << endl;
     }
 
     // сообщение о создании массива
@@ -119,7 +138,6 @@ public:
     static int get_array_size()
     {
         int size;
-        cout << "Enter the array dimension (no more than " << Constants::MAX_BUF << "):" << endl;
         cin >> size;
         return size;
     }
@@ -128,7 +146,6 @@ public:
     static double *get_array_elements(int n)
     {
         double *arr = new double[n];
-        cout << "Enter the array elements (separated by enter):" << endl;
         for (int i = 0; i < n; i++)
         {
             cin >> arr[i];
@@ -153,6 +170,6 @@ public:
             cout << result_process_1[i] << " ";
         }
         cout << endl;
-        delete[] result_process_1;
+        delete[] result_process_1; // очситка памяти после исопльзования
     }
 };
