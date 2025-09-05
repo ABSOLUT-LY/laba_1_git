@@ -30,14 +30,13 @@ class ArrayProcessor{
                 negative_count++;
             }
         }
-        if (not(negative_count))
-        {
-            ConsoleUI::error_message_negative_count(negative_count);
-            return false;
-        }
+        // if (not(negative_count))
+        // {
+        //     ConsoleUI::error_message_negative_count(negative_count);
+        //     return false;
+        // }
         if (negative_count < 2)
         {
-            ConsoleUI::error_message_negative_count_lower_than_two();
             return false;
         }
         return true;

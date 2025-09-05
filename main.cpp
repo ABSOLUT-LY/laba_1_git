@@ -27,14 +27,16 @@ private:
         ex_1.get_validated_array_dimension();
         ConsoleUI::clear_terminal();
         ex_1.get_validated_array();
-        if (ArrayProcessor::valid_result_for_output_process_1(ex_1.calculate_result_for_process_1()))
+        double *result = ex_1.calculate_result_for_process_1();
+        if (ArrayProcessor::valid_result_for_output_process_1(result))
         {
             // ConsoleUI::clear_terminal();
-            ConsoleUI::output_res_process_1(ex_1.calculate_result_for_process_1(), ex_1.get_negative_count());
+            ConsoleUI::output_res_process_1(result, ex_1.get_negative_count());
             ConsoleUI::homescreen_message();
         }
         else
         {
+            ConsoleUI::error_message_negative_count_lower_than_two();
             ConsoleUI::homescreen_message();
         }
     }

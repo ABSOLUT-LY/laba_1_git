@@ -53,7 +53,6 @@ public:
         else{
             return nullptr;
         }
-        // ConsoleUI::output_res_process_1(result_process_1,this->negative_count);
     }
 
     // ввод и проверка на валидность размерности массива
@@ -80,6 +79,7 @@ public:
         }
         else
         {
+            delete[] arr;
             this->arr = nullptr;
         }
     }
@@ -87,11 +87,6 @@ public:
     int get_size()
     {
         return this->n;
-    }
-
-    double *get_arr()
-    {
-        return this->arr;
     }
 
     int get_negative_count()
