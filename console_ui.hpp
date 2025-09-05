@@ -196,5 +196,6 @@ public:
             cout << result_process_2[i] << " ";
         }
         cout << endl;
+        delete[] result_process_2; // очистка памяти после вывода
     }
 };
