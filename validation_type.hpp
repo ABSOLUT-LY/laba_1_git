@@ -6,7 +6,7 @@
 // !предоставляет выбор вариатнов!
 enum class ValidationType
 {
-    FOR_SUM,    // 0
-    FOR_SORT,   // 1
-    FOR_PRODUCT // 2
+    FOR_SUM,    // 0 - сумма
+    FOR_SORT,   // 1 - сортиоровка
+    FOR_PRODUCT // 2 - произведение
 };

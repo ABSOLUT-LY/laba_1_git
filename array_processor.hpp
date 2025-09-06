@@ -1,10 +1,11 @@
 #include "common_constants.hpp" // импор для namespace contains
 #include "validation_type.hpp"  // для ValidationType
+#include "console_ui.hpp" // Для вывода сообщений в консоль
 #pragma once
 
 /*Статические методы - можно использовать без экзмепляра класса и не имеют доступа к this*/
 
-/*Здесь хранятся только логика для проверки данных*/
+/*Здесь хранятся только логика для проверки данных однмерных массивов*/
 
 class ArrayProcessor
 {
@@ -14,7 +15,7 @@ public:
     {
         if (size > Constants::MAX_BUF)
         {
-            ConsoleUI::error_message_dimension_biger_than_buff();
+            ConsoleUI::error_message_dimension(Error_dimension::BUFF_ERROR);
             return false;
         }
         switch (type_operation)
@@ -22,14 +23,14 @@ public:
         case ValidationType::FOR_SUM:
             if (size < 2)
             {
-                ConsoleUI::error_message_dimension_lower_than_2();
+                ConsoleUI::error_message_dimension(Error_dimension::SUM_ERROR);
                 return false;
             }
             break;
         case ValidationType::FOR_SORT:
             if (size < 1)
             {
-                ConsoleUI::error_message_dimension_lower_than_1();
+                ConsoleUI::error_message_dimension(Error_dimension::SORT_ERROR);
                 return false;
             }
             break;

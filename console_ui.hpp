@@ -1,6 +1,9 @@
 #include <iostream>             // ввыод/вывод
 #include "common_constants.hpp" // импор для namespace contains
-#pragma once                    // предотвращает многократное включение этого файла при импорте
+#include "error_type.hpp"       // для ValidationType
+#include <istream>              // для getline
+
+#pragma once // предотвращает многократное включение этого файла при импорте
 
 using namespace std; // для cin и cout
 
@@ -88,6 +91,23 @@ public:
         cout << "Correct" << endl;
     }
 
+    // сообщение о вводе предложений в файл
+    static void message_about_senteces_in_file()
+    {
+        cout << "A maximum of 1024 characters will be read (including signs and spaces)" << endl
+             << "Do not split sentences with Enter!" << endl
+             << "Only text in English!" << endl
+             << "Check your file before you start working" << endl;
+    }
+
+    // сообщение о вводе имени файла
+    static void message_input_name_file()
+    {
+        cout << "Enter the file name, without spaces, in English only, specifying its type." << endl
+             << "A maximum of 1024 characters will be read" << endl
+             << "Example:<example.txt>" << endl;
+    }
+
     // сообщение о вооде размерности массива
     static void message_input_dimension_array()
     {
@@ -142,12 +162,99 @@ public:
         cout << "Dimension lower than 1" << endl;
     }
 
+    // вывод сообщения о ошибке раземрности
+    static void error_message_dimension(Error_dimension type_error)
+    {
+        switch (type_error)
+        {
+        case Error_dimension::BUFF_ERROR:
+            error_message_dimension_biger_than_buff(); // размерность больше буфера
+            return;
+        case Error_dimension::SUM_ERROR:
+            error_message_dimension_lower_than_2(); // размерность меньше 2 - нельзя найти сумму
+            return;
+        case Error_dimension::SORT_ERROR:
+            error_message_dimension_lower_than_1(); // размерность меньше 1 - нельзя сортировать
+            return;
+        }
+    }
+
+    // вывод сообщения о ошибке символов
+    static void error_message_symbols()
+    {
+        cout << "Error: sentences do not contain letters or are not in English" << endl;
+    }
+
+    // вывод сообщения о ошибке колчиества строк
+    static void error_message_senteces_count()
+    {
+        cout << "Error: expected " << Constants::MAX_COUNT_SENTENCES << " strings" << endl;
+    }
+
+    // вывод сообщения о ошибке строки
+    static void error_message_string(Error_string type_error)
+    {
+        switch (type_error)
+        {
+        case Error_string::SYMBOLS_ERROR:
+            error_message_symbols();
+            return;
+        case Error_string::COUNT_SENTENCES_ERROR:
+            error_message_senteces_count();
+            return;
+        }
+    }
+
+    // вывод сообщения о отсутсвии файла
+    static void error_file_does_not_exists()
+    {
+        cout << "File does not exists" << endl;
+    }
+
+    // ВЫвод сообщения о ошибке имнеи файла
+    static void error_name_file()
+    {
+        cout << "Invalid file name. Try again. (press Enter before starting a new entry)" << endl;
+    }
+
+    // сообщение о ошибке файла
+    static void error_file_message(Error_file type_error)
+    {
+        switch (type_error)
+        {
+        case Error_file::FILE_DOES_NOT_EXIST:
+            error_file_does_not_exists();
+            break;
+        case Error_file::FILE_NAME_ERROR:
+            error_name_file();
+            break;
+        default:
+            break;
+        }
+    }
+
+    // вывод сообщения о ошибке результата
+    static void error_result_exercise_3_message()
+    {
+        cout << "There was a problem with the file contents." << endl;
+    }
+
     // ввод размернсоти
     static int get_array_size()
     {
         int size;
         cin >> size;
         return size;
+    }
+
+    // ввод имени файла
+    static char *get_file_name()
+    {
+        char *arr = new char[Constants::MAX_BUFF_STRING];
+        cin.clear();
+        cin.ignore(Constants::MAX_BUFF_STRING, '\n');
+        cin.getline(arr, Constants::MAX_BUFF_STRING + 1);
+        return arr;
     }
 
     // Ввод элементов массива
@@ -187,5 +294,19 @@ public:
             cout << result_process_2[i] << " ";
         }
         cout << endl;
+    }
+
+    static void output_res_exercise_3(char *str)
+    {
+        cout << "Line in reverse order:" << endl
+             << endl;
+        int ind = 0;
+        while (str[ind] != '\0')
+        {
+            cout << str[ind];
+            ind++;
+        }
+        cout << endl;
+        return;
     }
 };
