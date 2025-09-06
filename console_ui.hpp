@@ -45,7 +45,6 @@ public:
         cout << "";
     }
 
-
     // диалог для возврата на главный экран
     static void want_to_homescreen_message_dialog()
     {
@@ -99,12 +98,6 @@ public:
     static void message_input_array_elements()
     {
         cout << "Enter the array elements (separated by enter):" << endl;
-    }
-
-    // сообщение о создании массива
-    static void message_correct_create_array()
-    {
-        cout << "Array created" << endl;
     }
 
     // сообщение о ошибке наличия негативных элементов
@@ -165,7 +158,6 @@ public:
         {
             cin >> arr[i];
         }
-        message_correct_create_array;
         return arr;
     }
 
