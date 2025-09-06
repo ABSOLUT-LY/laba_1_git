@@ -85,9 +85,9 @@ public:
     }
 
     // функция для избежания бесконечной рекурсии
-    static bool should_stop_sort(int low, int higt)
+    static bool should_stop_sort(int low, int high)
     {
-        return low >= higt; // проверка правильности границ массива.
+        return low >= high; // проверка правильности границ массива.
 
         /*Очевидно, что если массив начинается с индекса 5 и кончается индексом 0, то что то не так*/
     }

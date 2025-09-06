@@ -185,7 +185,6 @@ public:
             cout << result_process_1[i] << " ";
         }
         cout << endl;
-        delete[] result_process_1; // очситка памяти после исопльзования
     }
 
     static void output_res_process_2(double *result_process_2, int n)
@@ -196,6 +195,5 @@ public:
             cout << result_process_2[i] << " ";
         }
         cout << endl;
-        delete[] result_process_2; // очистка памяти после вывода
     }
 };

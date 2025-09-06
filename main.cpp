@@ -42,6 +42,7 @@ private: // методы доступные внутри класса
             ConsoleUI::error_message_negative_count_lower_than_two(); // сообщение о ошибке данных массива
             ConsoleUI::want_to_homescreen_message_dialog();           // диалог о возвращении на главный экран
         }
+        ex_1.~Data(); // явно вызываю деструктор для освобождения памяти
     }
 
     // функция для действия 2 задания 1 в терминале
@@ -62,6 +63,7 @@ private: // методы доступные внутри класса
         double *result = ex_1.sort_array();                       // высчитываем результат действия первого: или массив или nullptr
         ConsoleUI::output_res_process_2(result, ex_1.get_size()); // вызов функции консоли для вывода результата
         ConsoleUI::want_to_homescreen_message_dialog();           // диалог о возврщении на главный экран
+        ex_1.~Data();                                             // явно вызываю деструктор для освобождения памяти
     }
 
     // задание 1
