@@ -1,15 +1,16 @@
 #include "common_constants.hpp" // импорт для namespace contains
 #include "array_processor.hpp"  // импорт для проверки данных на валидность
 #include "sort_algorithm.hpp"   // для доступа к алгоритмам сортировки
+#include "validation_type.hpp"  // для ValidationType
 #pragma once                    // предотвращает многократное включение этого файла при импорте
 
 /*Здесь хранятся только методы работы с данными класса и данные класса*/
 
 class Data // класс для работы и харнения данных
 {
-private:                    // доступно только внутри класса
-    int n;                  // размерность массива
-    double *arr;            // массив
+private:                // доступно только внутри класса
+    int n;              // размерность массива
+    double *arr;        // массив
     int negative_count; // колчиество отрицтальных элементов
 
 public: // доступно вне класса
@@ -69,8 +70,8 @@ public: // доступно вне класса
     {
         while (true) // пока ввод размерности не будет правильным
         {
-            int size = ConsoleUI::get_array_size();             // запрос раземерности у интерфейса
-            if (ArrayProcessor::valid_array_size_for_sum(size)) // проверка размернсоти на валидность
+            int size = ConsoleUI::get_array_size();                              // запрос раземерности у интерфейса
+            if (ArrayProcessor::valid_array_size(size, ValidationType::FOR_SUM)) // проверка размернсоти на валидность
             {
                 this->n = size; // если валидный -присваиваем
                 return;         // выходим из цикла и функции
@@ -83,8 +84,8 @@ public: // доступно вне класса
     {
         while (true) // пока ввод размерности не будет правильным
         {
-            int size = ConsoleUI::get_array_size();              // запрос раземерности у интерфейса
-            if (ArrayProcessor::valid_array_size_for_sort(size)) // проверка размернсоти на валидность
+            int size = ConsoleUI::get_array_size();                               // запрос раземерности у интерфейса
+            if (ArrayProcessor::valid_array_size(size, ValidationType::FOR_SORT)) // проверка размернсоти на валидность
             {
                 this->n = size; // если валидный -присваиваем
                 return;         // выходим из цикла и функции

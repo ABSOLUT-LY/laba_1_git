@@ -1,5 +1,5 @@
 #include "common_constants.hpp" // импор для namespace contains
-#include "console_ui.hpp"
+#include "validation_type.hpp"  // для ValidationType
 #pragma once
 
 /*Статические методы - можно использовать без экзмепляра класса и не имеют доступа к this*/
@@ -9,33 +9,70 @@
 class ArrayProcessor
 {
 public:
-    // проверка на валидность для суммы размернсоти массива
-    static bool valid_array_size_for_sum(int size)
+    // проверка на валидность в зависимости от операции
+    static bool valid_array_size(int size, ValidationType type_operation)
     {
         if (size > Constants::MAX_BUF)
         {
             ConsoleUI::error_message_dimension_biger_than_buff();
             return false;
         }
-        if (size < 2)
+        switch (type_operation)
         {
-            ConsoleUI::error_message_dimension_lower_than_2();
-            return false;
+        case ValidationType::FOR_SUM:
+            if (size < 2)
+            {
+                ConsoleUI::error_message_dimension_lower_than_2();
+                return false;
+            }
+            break;
+        case ValidationType::FOR_SORT:
+            if (size < 1)
+            {
+                ConsoleUI::error_message_dimension_lower_than_1();
+                return false;
+            }
+            break;
+            // case ValidationType::FOR_PRODUCT: // для будущего использования
+            //     if (size < 3) {
+            //         // соответствующая ошибка
+            //         return false;
+            //     }
+            //     break;
         }
         return true;
     }
 
-    static bool valid_array_size_for_sort(int size)
+    // ПРИМЕР ПЕРЕГРУЗКИ
+    static bool valid_array_size(long int size, ValidationType type_operation)
     {
         if (size > Constants::MAX_BUF)
         {
             ConsoleUI::error_message_dimension_biger_than_buff();
             return false;
         }
-        if (size < 1)
+        switch (type_operation)
         {
-            ConsoleUI::error_message_dimension_lower_than_1();
-            return false;
+        case ValidationType::FOR_SUM:
+            if (size < 2)
+            {
+                ConsoleUI::error_message_dimension_lower_than_2();
+                return false;
+            }
+            break;
+        case ValidationType::FOR_SORT:
+            if (size < 1)
+            {
+                ConsoleUI::error_message_dimension_lower_than_1();
+                return false;
+            }
+            break;
+            // case ValidationType::FOR_PRODUCT: // для будущего использования
+            //     if (size < 3) {
+            //         // соответствующая ошибка
+            //         return false;
+            //     }
+            //     break;
         }
         return true;
     }
