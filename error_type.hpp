@@ -18,7 +18,8 @@ enum class Error_dimension
 enum class Error_string
 {
     SYMBOLS_ERROR,         // 0 - ошибка символов
-    COUNT_SENTENCES_ERROR, // 1 - ошибка количетсва предложений
+    CONTENT_STRING_ERROR,   // 1
+    COUNT_SENTENCES_ERROR, // 2 - ошибка количетсва предложений
 };
 
 // ДЛЯ ФАЙЛОВ
@@ -26,4 +27,17 @@ enum class Error_file
 {
     FILE_DOES_NOT_EXIST, // 0 - файл не сущетсвует
     FILE_NAME_ERROR,     // 1 - ошибка имени файла
+};
+
+enum class Error_array_content
+{
+    ERROR_COUNT_NEGATIVE_ELEMENTS_FOR_SUM,
+};
+
+// ДЛЯ РЕЗУЛЬТАТОВ ОСНОВНОЙ ПРОГРАММЫ
+enum class App_error
+{
+    // Общие ошибки ввода
+    INVALID_OPERATION_NUMBER,
+    UNKNOWN_ERROR,
 };

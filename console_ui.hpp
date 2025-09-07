@@ -1,7 +1,8 @@
-#include <iostream>             // ввыод/вывод
-#include "common_constants.hpp" // импор для namespace contains
-#include "error_type.hpp"       // для ValidationType
-#include <istream>              // для getline
+#include <iostream>                   // ввыод/вывод
+#include "common_constants.hpp"       // импор для namespace contains
+#include "error_type.hpp"             // для ValidationType
+#include <istream>                    // для getline
+#include "screen_console_options.hpp" //для вариатнов выбора в консоли
 
 #pragma once // предотвращает многократное включение этого файла при импорте
 
@@ -13,21 +14,137 @@ using namespace std; // для cin и cout
 
 class ConsoleUI // класс для работы с консольным интерфейсом
 {
-public:
-    // Очистка терминала
-    static void clear_terminal()
+private:
+    // приват
+
+    // сообщение о корректном вводе размернсти
+    static void message_correct_dimension()
     {
-        system("cls");
+        cout << "Correct" << endl;
     }
 
-    // ФУНКЦИИ ДЛЯ СООБЩЕНИЙ UI
+    // сообщение о вводе предложений в файл
+    static void message_about_senteces_in_file()
+    {
+        cout << "A maximum of 1024 characters will be read (including signs and spaces)" << endl
+             << "Do not split sentences with Enter!" << endl
+             << "Only text in English!" << endl
+             << "Check your file before you start working" << endl;
+    }
 
-    // Пример функции для сообщения о ошибке
-    // void error_message_{причина ошибки}()
-    // {
-    //     cout << "Ошибка,..." << endl;
-    // }
+    // сообщение о вводе имени файла
+    static void message_input_name_file()
+    {
+        cout << "Enter the file name, without spaces, in English only, specifying its type." << endl
+             << "A maximum of 1024 characters will be read" << endl
+             << "Example:<example.txt>" << endl;
+    }
 
+    // сообщение о вооде размерности массива
+    static void message_input_dimension_array()
+    {
+        cout << "Enter the array dimension (no more than " << Constants::MAX_BUF << "):" << endl;
+    }
+
+    // сообщение о вводе жлементов масиива
+    static void message_input_array_elements()
+    {
+        cout << "Enter the array elements (separated by enter):" << endl;
+    }
+
+    // сообщение о ошибке наличия негативных элементов
+    static void error_message_negative_count(int nc)
+    {
+        cout << "Error, no negative elements" << endl;
+    }
+
+    // сообщение о ошибке наличия негативных элементов
+    static void error_message_negative_count_lower_than_two()
+    {
+        cout << "Error, count of negative elements lower then two" << endl;
+    }
+
+    // сообщение о ошибке расстояния между максимальным и минимальным элементами
+    static void error_message_max_min_no_distance(int distance)
+    {
+        cout << "Error, distance between max and min elements " << distance << " expected 2 or more" << endl;
+    }
+
+    // сообщение о ошибке отсутсвия отрицатльных элементов
+    static void error_message_count_negative_elements_lower_than_2()
+    {
+        cout << "Operation failed: the number of negative elements is less than 2" << endl;
+    }
+
+    // сообщеине о ошибке резмерность более буфера
+    static void error_message_dimension_biger_than_buff()
+    {
+        cout << "Dimension greater than maximum buff" << endl;
+    }
+
+    // сообщение о ошибке размерность мене 2
+    static void error_message_dimension_lower_than_2()
+    {
+        cout << "Dimension lower than 2" << endl;
+    }
+
+    // сообщение о ошибке размерность мене 1
+    static void error_message_dimension_lower_than_1()
+    {
+        cout << "Dimension lower than 1" << endl;
+    }
+
+    // вывод сообщения о ошибке символов
+    static void error_message_symbols()
+    {
+        cout << "Error: sentences do not contain letters or are not in English" << endl;
+    }
+
+    // вывод сообщения о ошибке колчиества строк
+    static void error_message_senteces_count()
+    {
+        cout << "Error: expected " << Constants::MAX_COUNT_SENTENCES << " strings" << endl;
+    }
+
+    // вывод сообщения о ошибке строки
+    static void error_message_string(Error_string type_error)
+    {
+        switch (type_error)
+        {
+        case Error_string::SYMBOLS_ERROR:
+            error_message_symbols();
+            return;
+        case Error_string::COUNT_SENTENCES_ERROR:
+            error_message_senteces_count();
+            return;
+        }
+    }
+
+    // вывод сообщения о отсутсвии файла
+    static void error_file_does_not_exists()
+    {
+        cout << "File does not exists" << endl;
+    }
+
+    // ВЫвод сообщения о ошибке имнеи файла
+    static void error_name_file()
+    {
+        cout << "Invalid file name. Try again. (press Enter before starting a new entry)" << endl;
+    }
+
+    // выовд сообщения о неизвестной ошибке
+    static void unknown_error()
+    {
+        cout << "An unknown error occurred." << endl;
+    }
+
+    // вывод сообщения о ошибке результата
+    static void error_content_string()
+    {
+        cout << "There was a problem with the file contents." << endl;
+    }
+
+    // Вовод сообщения о неверном номере опреации
     static void error_message_invalid_operation_number()
     {
         cout << "Invalid operation number. Try again:" << "\t";
@@ -84,160 +201,22 @@ public:
         cout << "3. Exercise 3;" << endl;
         cout << "Select and enter the task number:" << "\t";
     }
-
-    // сообщение о корректном вводе размернсти
-    static void message_correct_dimension()
+public:
+    // Очистка терминала
+    static void clear_terminal()
     {
-        cout << "Correct" << endl;
+        system("cls");
     }
 
-    // сообщение о вводе предложений в файл
-    static void message_about_senteces_in_file()
-    {
-        cout << "A maximum of 1024 characters will be read (including signs and spaces)" << endl
-             << "Do not split sentences with Enter!" << endl
-             << "Only text in English!" << endl
-             << "Check your file before you start working" << endl;
-    }
+    // ФУНКЦИИ ДЛЯ СООБЩЕНИЙ UI
 
-    // сообщение о вводе имени файла
-    static void message_input_name_file()
-    {
-        cout << "Enter the file name, without spaces, in English only, specifying its type." << endl
-             << "A maximum of 1024 characters will be read" << endl
-             << "Example:<example.txt>" << endl;
-    }
+    // Пример функции для сообщения о ошибке
+    // void error_message_{причина ошибки}()
+    // {
+    //     cout << "Ошибка,..." << endl;
+    // }
 
-    // сообщение о вооде размерности массива
-    static void message_input_dimension_array()
-    {
-        cout << "Enter the array dimension (no more than " << Constants::MAX_BUF << "):" << endl;
-    }
-
-    // сообщение о вводе жлементов масиива
-    static void message_input_array_elements()
-    {
-        cout << "Enter the array elements (separated by enter):" << endl;
-    }
-
-    // сообщение о ошибке наличия негативных элементов
-    static void error_message_negative_count(int nc)
-    {
-        cout << "Error, no negative elements" << endl;
-    }
-
-    // сообщение о ошибке наличия негативных элементов
-    static void error_message_negative_count_lower_than_two()
-    {
-        cout << "Error, count of negative elements lower then two" << endl;
-    }
-
-    // сообщение о ошибке расстояния между максимальным и минимальным элементами
-    static void error_message_max_min_no_distance(int distance)
-    {
-        cout << "Error, distance between max and min elements " << distance << " expected 2 or more" << endl;
-    }
-
-    // сообщение о ошибке отсутсвия отрицатльных элементов
-    static void error_message_no_negative_elements()
-    {
-        cout << "Operation failed: no negative elements found." << endl;
-    }
-
-    // сообщеине о ошибке резмерность более буфера
-    static void error_message_dimension_biger_than_buff()
-    {
-        cout << "Dimension greater than maximum buff" << endl;
-    }
-
-    // сообщение о ошибке размерность мене 2
-    static void error_message_dimension_lower_than_2()
-    {
-        cout << "Dimension lower than 2" << endl;
-    }
-
-    // сообщение о ошибке размерность мене 1
-    static void error_message_dimension_lower_than_1()
-    {
-        cout << "Dimension lower than 1" << endl;
-    }
-
-    // вывод сообщения о ошибке раземрности
-    static void error_message_dimension(Error_dimension type_error)
-    {
-        switch (type_error)
-        {
-        case Error_dimension::BUFF_ERROR:
-            error_message_dimension_biger_than_buff(); // размерность больше буфера
-            return;
-        case Error_dimension::SUM_ERROR:
-            error_message_dimension_lower_than_2(); // размерность меньше 2 - нельзя найти сумму
-            return;
-        case Error_dimension::SORT_ERROR:
-            error_message_dimension_lower_than_1(); // размерность меньше 1 - нельзя сортировать
-            return;
-        }
-    }
-
-    // вывод сообщения о ошибке символов
-    static void error_message_symbols()
-    {
-        cout << "Error: sentences do not contain letters or are not in English" << endl;
-    }
-
-    // вывод сообщения о ошибке колчиества строк
-    static void error_message_senteces_count()
-    {
-        cout << "Error: expected " << Constants::MAX_COUNT_SENTENCES << " strings" << endl;
-    }
-
-    // вывод сообщения о ошибке строки
-    static void error_message_string(Error_string type_error)
-    {
-        switch (type_error)
-        {
-        case Error_string::SYMBOLS_ERROR:
-            error_message_symbols();
-            return;
-        case Error_string::COUNT_SENTENCES_ERROR:
-            error_message_senteces_count();
-            return;
-        }
-    }
-
-    // вывод сообщения о отсутсвии файла
-    static void error_file_does_not_exists()
-    {
-        cout << "File does not exists" << endl;
-    }
-
-    // ВЫвод сообщения о ошибке имнеи файла
-    static void error_name_file()
-    {
-        cout << "Invalid file name. Try again. (press Enter before starting a new entry)" << endl;
-    }
-
-    // сообщение о ошибке файла
-    static void error_file_message(Error_file type_error)
-    {
-        switch (type_error)
-        {
-        case Error_file::FILE_DOES_NOT_EXIST:
-            error_file_does_not_exists();
-            break;
-        case Error_file::FILE_NAME_ERROR:
-            error_name_file();
-            break;
-        default:
-            break;
-        }
-    }
-
-    // вывод сообщения о ошибке результата
-    static void error_result_exercise_3_message()
-    {
-        cout << "There was a problem with the file contents." << endl;
-    }
+    // паблик
 
     // ввод размернсоти
     static int get_array_size()
@@ -311,5 +290,135 @@ public:
         }
         cout << endl;
         return;
+    }
+
+    // вывод экранов выбора
+    static void handler_screen_programm(AppOptions value)
+    {
+        switch (value)
+        {
+        case AppOptions::EX_1:
+            message_exercise_1_screen();
+            break;
+        case AppOptions::EX_2:
+            break;
+        case AppOptions::EX_3:
+            message_exercise_3_screen();
+            break;
+        case AppOptions::HOMESCREEN_DIALOG:
+            want_to_homescreen_message_dialog();
+            break;
+        case AppOptions::HOMESCREEN:
+            message_homescreen();
+            break;
+        }
+    }
+
+    // единый вывод сообщений для задания 1
+    static void handler_screen_exercise_1(Exercise_1 value)
+    {
+        switch (value)
+        {
+        case Exercise_1::ARRAY_INPUT:
+            message_input_array_elements();
+            break;
+        case Exercise_1::DIMENSION_INPUT:
+            message_input_dimension_array();
+        default:
+            break;
+        }
+    }
+
+    static void handler_screen_exercise_3(Exercise_3 value)
+    {
+        switch (value)
+        {
+        case Exercise_3::FILE_NAME:
+            message_input_name_file();
+            break;
+        default:
+            break;
+        }
+    }
+
+    // единая функция для обработки ошибко по коду
+    static void handler_error_main_app(App_error error_code)
+    {
+        switch (error_code)
+        {
+        case App_error::UNKNOWN_ERROR:
+            unknown_error();
+            break;
+        case App_error::INVALID_OPERATION_NUMBER:
+            error_message_invalid_operation_number();
+            break;
+        default:
+            break;
+        }
+    }
+
+    // сообщение о ошибке файла
+    static void handler_error_file_message(Error_file type_error)
+    {
+        switch (type_error)
+        {
+        case Error_file::FILE_DOES_NOT_EXIST:
+            error_file_does_not_exists();
+            break;
+        case Error_file::FILE_NAME_ERROR:
+            error_name_file();
+            break;
+        default:
+            break;
+        }
+    }
+
+    // вывод сообщения о ошибке раземрности
+    static void handler_error_message_dimension(Error_dimension type_error)
+    {
+        switch (type_error)
+        {
+        case Error_dimension::BUFF_ERROR:
+            error_message_dimension_biger_than_buff(); // размерность больше буфера
+            return;
+        case Error_dimension::SUM_ERROR:
+            error_message_dimension_lower_than_2(); // размерность меньше 2 - нельзя найти сумму
+            return;
+        case Error_dimension::SORT_ERROR:
+            error_message_dimension_lower_than_1(); // размерность меньше 1 - нельзя сортировать
+            return;
+        }
+    }
+
+    // единый метод вывода сообщений о ошибке содержания массива
+    static void handler_error_message_array_elements(Error_array_content type_error)
+    {
+        switch (type_error)
+        {
+        case Error_array_content::ERROR_COUNT_NEGATIVE_ELEMENTS_FOR_SUM:
+            error_message_count_negative_elements_lower_than_2();
+            break;
+        default:
+            break;
+        }
+    }
+
+    // единый метод вывода ошибок о содержании строки
+    static void handler_error_messge_string_content(Error_string type_error)
+    {
+        switch (type_error)
+        {
+        case Error_string::CONTENT_STRING_ERROR:
+            error_content_string();
+            break;
+        case Error_string::COUNT_SENTENCES_ERROR:
+            error_message_senteces_count();
+            break;
+        case Error_string::SYMBOLS_ERROR:
+            error_message_symbols();
+            break;
+        default:
+            break;
+        }
     }
 };

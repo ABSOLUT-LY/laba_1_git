@@ -18,7 +18,7 @@ public:
         {
             return true;
         }
-        ConsoleUI::error_file_message(Error_file::FILE_DOES_NOT_EXIST);
+        ConsoleUI::handler_error_file_message(Error_file::FILE_DOES_NOT_EXIST);
         return false;
     }
 
@@ -39,7 +39,7 @@ public:
         {
             return true;
         }
-        ConsoleUI::error_file_message(Error_file::FILE_DOES_NOT_EXIST);
+        ConsoleUI::handler_error_file_message(Error_file::FILE_DOES_NOT_EXIST);
         return false;
     }
 
@@ -49,7 +49,7 @@ public:
         // Проверка на нулевой указатель или пустую строку
         if (filename == nullptr || filename[0] == '\0')
         {
-            ConsoleUI::error_file_message(Error_file::FILE_NAME_ERROR);
+            ConsoleUI::handler_error_file_message(Error_file::FILE_NAME_ERROR);
             return false;
         }
 
@@ -62,14 +62,14 @@ public:
             if (c == '<' || c == '>' || c == ':' || c == '"' ||
                 c == '/' || c == '\\' || c == '|' || c == '?' || c == '*')
             {
-                ConsoleUI::error_file_message(Error_file::FILE_NAME_ERROR);
+                ConsoleUI::handler_error_file_message(Error_file::FILE_NAME_ERROR);
                 return false;
             }
 
             // Проверка на пробелы и управляющие символы (ASCII < 32)
             if (c <= 32)
             {
-                ConsoleUI::error_file_message(Error_file::FILE_NAME_ERROR);
+                ConsoleUI::handler_error_file_message(Error_file::FILE_NAME_ERROR);
                 return false;
             }
 
@@ -79,7 +79,7 @@ public:
                   (c >= '0' && c <= '9') || // цифры
                   c == '-' || c == '_' || c == '.'))
             { // разрешенные символы
-                ConsoleUI::error_file_message(Error_file::FILE_NAME_ERROR);
+                ConsoleUI::handler_error_file_message(Error_file::FILE_NAME_ERROR);
                 return false;
             }
 

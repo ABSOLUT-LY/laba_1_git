@@ -1,11 +1,13 @@
-#include <iostream>               // ввыод/вывод
-#include "common_constants.hpp"   // импор для namespace contains
-#include "console_ui.hpp"         // импорт для работы с консольным интерфейсом
-#include "array_processor.hpp"    // импорт для проверки данных на валидность
-#include "data_array_worker.hpp"  // класс для работы с массивами
-#include "data_file_worker.hpp"   // класс для работы с фалами
-#include "data_string_worker.hpp" // класс для работы с строками
-#include "string_processor.hpp"   // класс для проверки валдности строк
+#include <iostream>                   // ввыод/вывод
+#include "common_constants.hpp"       // импор для namespace contains
+#include "console_ui.hpp"             // импорт для работы с консольным интерфейсом
+#include "array_processor.hpp"        // импорт для проверки данных на валидность
+#include "data_array_worker.hpp"      // класс для работы с массивами
+#include "data_file_worker.hpp"       // класс для работы с фалами
+#include "data_string_worker.hpp"     // класс для работы с строками
+#include "string_processor.hpp"       // класс для проверки валдности строк
+#include "error_type.hpp"             // класс с типами ошибок
+#include "screen_console_options.hpp" //для вариантов выбора сообщений
 
 using namespace std; // для доступа к функциям из std без написания std::
 
@@ -30,23 +32,27 @@ private: // методы доступные внутри класса
     // функция для действия 1 задания 1 в терминале
     void process_1_terminal()
     {
-        ConsoleUI::clear_terminal();                                   // очищаем терминал перед работой
-        ConsoleUI::message_input_dimension_array();                    // вывод собщения о вводе размерности
-        ex_1.get_validated_array_dimension_for_sum();                  // вызывает ввод размерности массива для экземпляра класса.Д
-        ConsoleUI::clear_terminal();                                   // очищаем терминал для следующего сообщения
-        ConsoleUI::message_input_array_elements();                     // вывод сообщщения о вводе элементов массива
-        ex_1.get_validated_array_for_sum();                            // вызывае тввод элементов массива для экхемпляра класса
-        double *result = ex_1.calculate_result_for_process_1();        // высчитываем результат действия первого: или массив или nullptr
-        if (ArrayProcessor::valid_result_for_output_process_1(result)) // проверяем на валидность если массив - валидно
+        ConsoleUI::clear_terminal();                                       // очищаем терминал перед работой
+        ConsoleUI::handler_screen_exercise_1(Exercise_1::DIMENSION_INPUT); // вывод собщения о вводе размерности
+        ex_1.get_validated_array_dimension_for_sum();                      // вызывает ввод размерности массива для экземпляра класса.Д
+        ConsoleUI::clear_terminal();                                       // очищаем терминал для следующего сообщения
+        ConsoleUI::handler_screen_exercise_1(Exercise_1::ARRAY_INPUT);     // вывод сообщщения о вводе элементов массива
+        ex_1.get_validated_array_for_sum();                                // вызывае тввод элементов массива для экхемпляра класса
+        try
         {
+            double *result = ex_1.calculate_result_for_process_1(); // высчитываем результат действия первого: или массив или nullptr
             ConsoleUI::output_res_process_1(result, ex_1.get_negative_count()); // вызов функции консоли для вывода результата
-            ConsoleUI::want_to_homescreen_message_dialog();                     // диалог о возврщении на главный экран
+            ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG);  // диалог о возврщении на главный экран
         }
-        else
+        catch (const std::invalid_argument &e)
         {
-            ConsoleUI::error_message_negative_count_lower_than_two(); // сообщение о ошибке данных массива
-            ConsoleUI::want_to_homescreen_message_dialog();           // диалог о возвращении на главный экран
-            // деструктор будет вызван автоматически при выходе из блока кода
+            ConsoleUI::handler_error_message_array_elements(Error_array_content::ERROR_COUNT_NEGATIVE_ELEMENTS_FOR_SUM); // сообщение о ошибке данных массива
+            ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG);                                           // диалог о возвращении на главный экран                                                           // деструктор будет вызван автоматически при выходе из блока кода
+        }
+        catch (const std::exception &e)
+        {
+            ConsoleUI::handler_error_main_app(App_error::UNKNOWN_ERROR);       // сообщение о ошибке данных массива
+            ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возвращении на главный экран
         }
     }
 
@@ -59,25 +65,25 @@ private: // методы доступные внутри класса
     // функция для действия 3 задания 1 в терминале
     void process_3_terminal()
     {
-        ConsoleUI::clear_terminal();                              // очищаем терминал перед работой
-        ConsoleUI::message_input_dimension_array();               // вывод собщения о вводе размерности
-        ex_1.get_validated_array_dimension_for_sort();            // вызывает ввод размерности массива для экземпляра класса
-        ConsoleUI::clear_terminal();                              // очищаем терминал для следующего сообщения
-        ConsoleUI::message_input_array_elements();                // вывод сообщщения о вводе элементов массива
-        ex_1.get_validated_array_for_sort();                      // вызывае тввод элементов массива для экхемпляра класса
-        double *result = ex_1.sort_array();                       // высчитываем результат действия первого: или массив или nullptr
-        ConsoleUI::output_res_process_3(result, ex_1.get_size()); // вызов функции консоли для вывода результата
-        ConsoleUI::want_to_homescreen_message_dialog();           // диалог о возврщении на главный экран
+        ConsoleUI::clear_terminal();                                       // очищаем терминал перед работой
+        ConsoleUI::handler_screen_exercise_1(Exercise_1::DIMENSION_INPUT); // вывод собщения о вводе размерности
+        ex_1.get_validated_array_dimension_for_sort();                     // вызывает ввод размерности массива для экземпляра класса
+        ConsoleUI::clear_terminal();                                       // очищаем терминал для следующего сообщения
+        ConsoleUI::handler_screen_exercise_1(Exercise_1::ARRAY_INPUT);     // вывод сообщщения о вводе элементов массива
+        ex_1.get_validated_array_for_sort();                               // вызывае тввод элементов массива для экхемпляра класса
+        double *result = ex_1.sort_array();                                // высчитываем результат действия первого: или массив или nullptr
+        ConsoleUI::output_res_process_3(result, ex_1.get_size());          // вызов функции консоли для вывода результата
+        ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возврщении на главный экран
         // деструктор будет вызван автоматически при выходе из блока кода
     }
 
     // задание 1
     void screen_exercise_1_terminal() // экран выбора действия в задании 1
     {
-        ConsoleUI::clear_terminal();            // очистка терминала перед началом работы
-        int k = 0;                              // Номер оперцаии
-        ConsoleUI::message_exercise_1_screen(); // вывод сообщений с возможными действиями
-        while (true)                            // бесконечный цикл для возможности многократного ввода пользователем
+        ConsoleUI::clear_terminal();                          // очистка терминала перед началом работы
+        int k = 0;                                            // Номер оперцаии
+        ConsoleUI::handler_screen_programm(AppOptions::EX_1); // вывод сообщений с возможными действиями
+        while (true)                                          // бесконечный цикл для возможности многократного ввода пользователем
         {
             cin >> k; // ввод номера действия
             switch (k)
@@ -87,13 +93,13 @@ private: // методы доступные внутри класса
                 return;               // выход из While и switch - конец выполнения функции
             case 2:                   // к == 2 действие 2
                 /*ЗДЕСЬ ПОТОМ ДАПИСАТЬ ВТОРОЕ ДЕЙСТВИЕ*/
-                return;                                              // выход из While и switch - конец выполнения функции
-            case 3:                                                  // к == 3 - действие 3
-                process_3_terminal();                                // запуск действия 3
-                return;                                              // выход из While и switch - конец выполнения функции
-            default:                                                 // Нет такого действия
-                ConsoleUI::error_message_invalid_operation_number(); // вывод сообщения о ошибке номера операции
-                break;                                               // выход из switch и вход назад в while
+                return;                                                                 // выход из While и switch - конец выполнения функции
+            case 3:                                                                     // к == 3 - действие 3
+                process_3_terminal();                                                   // запуск действия 3
+                return;                                                                 // выход из While и switch - конец выполнения функции
+            default:                                                                    // Нет такого действия
+                ConsoleUI::handler_error_main_app(App_error::INVALID_OPERATION_NUMBER); // вывод сообщения о ошибке номера операции
+                break;                                                                  // выход из switch и вход назад в while
             }
         }
     }
@@ -101,56 +107,66 @@ private: // методы доступные внутри класса
     // задание 3
     void screen_exercise_3_terminal() // экран выбора действия в задании 3
     {
-        ConsoleUI::clear_terminal();                        // очистка терминала перед началом работы
-        ConsoleUI::message_input_name_file();               // ввод имени файла
-        f_3.get_file_name();                                // получение имени файла классом файла
-        ConsoleUI::clear_terminal();                        // очистка терминала перед началом работы
-        char *text = f_3.read_file();                       // чтение из файла
-        if (FileProcessor::valid_result_of_read_file(text)) // если то что прочли валидно
+        ConsoleUI::clear_terminal();                                 // очистка терминала перед началом работы
+        ConsoleUI::handler_screen_exercise_3(Exercise_3::FILE_NAME); // ввод имени файла
+        f_3.get_file_name();                                         // получение имени файла классом файла
+        ConsoleUI::clear_terminal();                                 // очистка терминала перед началом работы
+        try
         {
-            str_3.get_validated_string(text);                        // присваиваем к классу строки
-            char *result = str_3.reverse_string();                   // выполняем операцию задания
-            if (StringProcessor::valid_output_of_exercise_3(result)) // проверка на валиность
+            char *text = f_3.read_file(); // чтение из файла
+            try
             {
-                ConsoleUI::output_res_exercise_3(result);       // выводим результат
-                ConsoleUI::want_to_homescreen_message_dialog(); // диалог о возврщении на главный экран
+                str_3.get_validated_string(text);                                  // присваиваем к классу строки
+                char *result = str_3.reverse_string();                             // выполняем операцию задания
+                ConsoleUI::output_res_exercise_3(result);                          // выводим результат
+                ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возврщении на главный экран
             }
-            else
+            catch (const std::invalid_argument &e)
             {
-                ConsoleUI::error_result_exercise_3_message();   // иначе выводим сообщение о ошибке
-                ConsoleUI::want_to_homescreen_message_dialog(); // диалог о возвращении на главный экран
+                ConsoleUI::handler_error_messge_string_content(Error_string::CONTENT_STRING_ERROR); // если файла нет - пишем, что нет
+                ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG);                  // диалог о возврщении на главный экран
+            }
+            catch (const std::exception &e)
+            {
+                ConsoleUI::handler_error_main_app(App_error::UNKNOWN_ERROR);       // сообщение о ошибке данных массива
+                ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возвращении на главный экран
             }
         }
-        else
+        catch (const std::invalid_argument &e)
         {
-            ConsoleUI::error_file_message(Error_file::FILE_DOES_NOT_EXIST); // если файла нет - пишем, что нет
-            ConsoleUI::want_to_homescreen_message_dialog();                 // диалог о возврщении на главный экран
+            ConsoleUI::handler_error_file_message(Error_file::FILE_DOES_NOT_EXIST); // если файла нет - пишем, что нет
+            ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG);      // диалог о возврщении на главный экран
+        }
+        catch (const std::exception &e)
+        {
+            ConsoleUI::handler_error_main_app(App_error::UNKNOWN_ERROR);       // сообщение о ошибке данных массива
+            ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возвращении на главный экран
         }
     }
 
     // создание начального экрана
     void terminal_process()
     {
-        int k = 0;                       // Номер задания
-        ConsoleUI::message_homescreen(); // Ввывод сообщния дял выбора пользователем действия
-        while (true)                     // бесконечный цикл для возможности многократного ввода пользователем
+        int k = 0;                                                  // Номер задания
+        ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN); // Ввывод сообщния дял выбора пользователем действия
+        while (true)                                                // бесконечный цикл для возможности многократного ввода пользователем
         {
             cin >> k; // ввод номера действия
             switch (k)
             {
-            case 1:                                                  // к == 1 действие 1
-                screen_exercise_1_terminal();                        // отображение меню действия 1
-                terminal_process();                                  // после окончания работы действия 1 и диалога возврата на главный экран, если не выборал "N\n"
-                break;                                               // выход из свитч
-            case 2:                                                  // к == 2 действие 2
-                break;                                               // выход из свитч
-            case 3:                                                  // к == 3 действие 3
-                screen_exercise_3_terminal();                        // отображение меню действия 1
-                terminal_process();                                  // после окончания работы действия 1 и диалога возврата на главный экран, если не выборал "N\n"
-                break;                                               // выход из свитч
-            default:                                                 // Нет такого варианта
-                ConsoleUI::error_message_invalid_operation_number(); // вывод сообщения о ошибке номера операции
-                break;                                               // выход из свитч
+            case 1:                                                                     // к == 1 действие 1
+                screen_exercise_1_terminal();                                           // отображение меню действия 1
+                terminal_process();                                                     // после окончания работы действия 1 и диалога возврата на главный экран, если не выборал "N\n"
+                break;                                                                  // выход из свитч
+            case 2:                                                                     // к == 2 действие 2
+                break;                                                                  // выход из свитч
+            case 3:                                                                     // к == 3 действие 3
+                screen_exercise_3_terminal();                                           // отображение меню действия 1
+                terminal_process();                                                     // после окончания работы действия 1 и диалога возврата на главный экран, если не выборал "N\n"
+                break;                                                                  // выход из свитч
+            default:                                                                    // Нет такого варианта
+                ConsoleUI::handler_error_main_app(App_error::INVALID_OPERATION_NUMBER); // вывод сообщения о ошибке номера операции
+                break;                                                                  // выход из свитч
             }
         }
     }

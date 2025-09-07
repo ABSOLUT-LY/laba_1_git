@@ -62,6 +62,7 @@ public: // доступно вне класса
         }
         else
         {
+            throw std::invalid_argument("Error array");
             return nullptr; // если не корректен - nullptr
         }
     }

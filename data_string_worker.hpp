@@ -35,7 +35,8 @@ public:
         else
         {
             this->str = nullptr; // причаиваем nullptr елсли строка не прошла
-            return;              // выходим
+            throw std::invalid_argument("Dont read string");
+            return; // выходим
         }
     }
 

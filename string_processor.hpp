@@ -84,13 +84,13 @@ public:
         // если в строке не необходимое количество преложений
         if (!valid_count_sentences(str, Constants::MAX_COUNT_SENTENCES))
         {
-            ConsoleUI::error_message_string(Error_string::COUNT_SENTENCES_ERROR);
+            ConsoleUI::handler_error_messge_string_content(Error_string::COUNT_SENTENCES_ERROR);
             return false;
         }
         // если в строке не валидные символы
         if (!valid_symbols_in_string(str))
         {
-            ConsoleUI::error_message_string(Error_string::SYMBOLS_ERROR);
+            ConsoleUI::handler_error_messge_string_content(Error_string::SYMBOLS_ERROR);
             return false;
         }
         // иаче все корректно
