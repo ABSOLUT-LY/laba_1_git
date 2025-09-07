@@ -10,6 +10,10 @@ public:
     // функция вызова сортировки
     static double *quick_sort(double *arr_for_sort, int n)
     {
+        if (arr_for_sort == nullptr)
+        {
+            throw std::runtime_error("Cannot sort a null array.");
+        }
         double *result = new double[n]; // копируем начальным массив
         for (int i = 0; i < n; i++)
         {

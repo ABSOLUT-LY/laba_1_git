@@ -33,7 +33,6 @@ public:
         file.close(); // закрытие файла
         delete[] tmp; // очистка памяти
         throw std::invalid_argument("error filename");
-        return nullptr; // если не удалось -> nullptr
     }
 
     // очистка файла
