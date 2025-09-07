@@ -269,6 +269,7 @@ public:
     }
 
     // ФУНКЦИИ ДЛЯ ВЫВОДА РЕЗУЛЬТАТОВ РАБОТЫ ПРОЦЕССОВ
+    // вывод рещультата задачи 1 процесса 1
     static void output_res_process_1(double *result_process_1, int negative_count)
     {
         // Вывод количества отрицательных элементов
@@ -286,7 +287,8 @@ public:
         cout << endl;
     }
 
-    static void output_res_process_2(double *result_process_2, int n)
+    // вывод рещультата задачи 1 процесса 3
+    static void output_res_process_3(double *result_process_2, int n)
     {
         cout << "Sorted array using Quicksort method: ";
         for (int i = 0; i < n; i++)
@@ -296,6 +298,7 @@ public:
         cout << endl;
     }
 
+    // вывод рещультата задачи 3
     static void output_res_exercise_3(char *str)
     {
         cout << "Line in reverse order:" << endl

@@ -52,15 +52,14 @@ public:
     {
         while (true)
         {
-            char *tmp = new char[Constants::MAX_BUFF_STRING]; // создаем строку
-            tmp = ConsoleUI::get_file_name();
-            if (FileProcessor::valid_file_name(tmp))
+            char *tmp = ConsoleUI::get_file_name();  // записываем имя файла в временную переменную
+            if (FileProcessor::valid_file_name(tmp)) // если валидно - присваиваем
             {
                 delete[] this->name;
                 this->name = tmp;
                 return;
             }
-            delete[] tmp;
+            delete[] tmp; // иначе - отпускаем
             this->name = nullptr;
         }
     }

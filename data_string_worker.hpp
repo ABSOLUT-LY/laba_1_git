@@ -41,12 +41,12 @@ public:
 
     int last_char_index(char *str)
     {
-        int index = 0;
-        while (this->str[index] != '\0')
+        int index = 0;                   // начальный индекс строки
+        while (this->str[index] != '\0') // пока не конец
         {
-            index++;
+            index++; // ++++++
         }
-        return index;
+        return index; // возвращаем индекс последнего занчимого символа
     }
 
     char *reverse_string()
@@ -61,7 +61,7 @@ public:
         {
             tmp[i] = this->str[n - i - 1];
         }
-        tmp[n + 1] = '\0';
+        tmp[n] = '\0';
         return tmp;
     }
 };

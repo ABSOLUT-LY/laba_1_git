@@ -15,7 +15,7 @@ public:
         {
             return false;
         }
-        int sentence_count = 0;
+        int sentence_count = 0;     // колчиество предложений
         bool has_letters = false;   // Есть ли буквы в текущем предложении
         bool expect_capital = true; // Ожидаем заглавную букву в начале предложения
 
@@ -23,26 +23,26 @@ public:
         {
             char c = str[i];
 
-            if (isalpha(c))
+            if (isalpha(c)) // если буква
             {
-                if (expect_capital && islower(c))
+                if (expect_capital && islower(c)) // если мы ожидаем загавную, а текущая букува маленькая
                 {
                     return false; // Предложение должно начинаться с заглавной
                 }
-                has_letters = true;
-                expect_capital = false;
+                has_letters = true;     // иначе мы нашли букву - они есть
+                expect_capital = false; // не ожидаем заглавную букву т.к она была только что
             }
-            else if ((c == '!' || c == '?' || c == '.') && has_letters)
+            else if ((c == '!' || c == '?' || c == '.') && has_letters) // если знак конца предложеня и предложение содержало буквы
             {
                 // Корректное окончание предложения
-                sentence_count++;
-                has_letters = false;
-                expect_capital = true;
+                sentence_count++;      // +1 предложение
+                has_letters = false;   // обнуляем флаги
+                expect_capital = true; // снова ждем заглавную
 
                 // Пропускаем повторяющиеся конечные символы
-                while (str[i + 1] == '!' || str[i + 1] == '?' || str[i + 1] == '.')
+                while (str[i + 1] == '!' || str[i + 1] == '?' || str[i + 1] == '.') // если символы повторяюся
                 {
-                    i++;
+                    i++; // просто идем дальше
                 }
             }
         }
@@ -81,16 +81,19 @@ public:
     // проверка что строка полностью валидна
     static bool valid_string(char *str)
     {
+        // если в строке не необходимое количество преложений
         if (!valid_count_sentences(str, Constants::MAX_COUNT_SENTENCES))
         {
             ConsoleUI::error_message_string(Error_string::COUNT_SENTENCES_ERROR);
             return false;
         }
+        // если в строке не валидные символы
         if (!valid_symbols_in_string(str))
         {
             ConsoleUI::error_message_string(Error_string::SYMBOLS_ERROR);
             return false;
         }
+        // иаче все корректно
         return true;
     }
 
@@ -103,7 +106,4 @@ public:
         }
         return true;
     }
-
-
-    // проверка корректности работы 
 };

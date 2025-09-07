@@ -66,7 +66,7 @@ private: // методы доступные внутри класса
         ConsoleUI::message_input_array_elements();                // вывод сообщщения о вводе элементов массива
         ex_1.get_validated_array_for_sort();                      // вызывае тввод элементов массива для экхемпляра класса
         double *result = ex_1.sort_array();                       // высчитываем результат действия первого: или массив или nullptr
-        ConsoleUI::output_res_process_2(result, ex_1.get_size()); // вызов функции консоли для вывода результата
+        ConsoleUI::output_res_process_3(result, ex_1.get_size()); // вызов функции консоли для вывода результата
         ConsoleUI::want_to_homescreen_message_dialog();           // диалог о возврщении на главный экран
         // деструктор будет вызван автоматически при выходе из блока кода
     }
@@ -101,30 +101,30 @@ private: // методы доступные внутри класса
     // задание 3
     void screen_exercise_3_terminal() // экран выбора действия в задании 3
     {
-        ConsoleUI::clear_terminal(); // очистка терминала перед началом работы
-        ConsoleUI::message_input_name_file();
-        f_3.get_file_name();
-        ConsoleUI::clear_terminal();
-        char *text = f_3.read_file();
-        if (FileProcessor::valid_result_of_read_file(text))
+        ConsoleUI::clear_terminal();                        // очистка терминала перед началом работы
+        ConsoleUI::message_input_name_file();               // ввод имени файла
+        f_3.get_file_name();                                // получение имени файла классом файла
+        ConsoleUI::clear_terminal();                        // очистка терминала перед началом работы
+        char *text = f_3.read_file();                       // чтение из файла
+        if (FileProcessor::valid_result_of_read_file(text)) // если то что прочли валидно
         {
-            str_3.get_validated_string(text);
-            char *result = str_3.reverse_string();
-            if (StringProcessor::valid_output_of_exercise_3(result))
+            str_3.get_validated_string(text);                        // присваиваем к классу строки
+            char *result = str_3.reverse_string();                   // выполняем операцию задания
+            if (StringProcessor::valid_output_of_exercise_3(result)) // проверка на валиность
             {
-                ConsoleUI::output_res_exercise_3(result);
+                ConsoleUI::output_res_exercise_3(result);       // выводим результат
                 ConsoleUI::want_to_homescreen_message_dialog(); // диалог о возврщении на главный экран
             }
             else
             {
-                ConsoleUI::error_result_exercise_3_message();
+                ConsoleUI::error_result_exercise_3_message();   // иначе выводим сообщение о ошибке
                 ConsoleUI::want_to_homescreen_message_dialog(); // диалог о возвращении на главный экран
             }
         }
         else
         {
-            ConsoleUI::error_file_message(Error_file::FILE_DOES_NOT_EXIST);
-            ConsoleUI::want_to_homescreen_message_dialog(); // диалог о возврщении на главный экран
+            ConsoleUI::error_file_message(Error_file::FILE_DOES_NOT_EXIST); // если файла нет - пишем, что нет
+            ConsoleUI::want_to_homescreen_message_dialog();                 // диалог о возврщении на главный экран
         }
     }
 

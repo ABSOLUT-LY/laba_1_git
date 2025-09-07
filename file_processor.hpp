@@ -54,9 +54,9 @@ public:
         }
 
         int i = 0;
-        while (filename[i] != '\0')
+        while (filename[i] != '\0') // пока имя файла
         {
-            char c = filename[i];
+            char c = filename[i]; // присваиваем текущую букву
 
             // Проверка на запрещенные символы: <>:"/\|?*
             if (c == '<' || c == '>' || c == ':' || c == '"' ||
