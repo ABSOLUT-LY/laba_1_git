@@ -204,9 +204,10 @@ public: // доступно вне класса
         {
             if (count_of_occurrences_in_array(array_sorted, this->n, array_sorted[this->n - i]) > 1)
             {
-                return arr[this->n - i];
+                return array_sorted[this->n - i];
             }
         }
+        delete[] array_sorted;
         throw (std::invalid_argument("the array is unique"));
     }
 };
