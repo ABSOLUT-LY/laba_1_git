@@ -83,7 +83,7 @@ private: // методы доступные внутри класса
         {
             try
             {
-                ex_1.get_validated_array_dimension_for_sum(); // вызывает ввод размерности массива для экземпляра класса
+                ex_1.get_validated_array_dimension_for_sort(); // вызывает ввод размерности массива для экземпляра класса
                 break;
             }
             catch (const std::invalid_argument &e)
