@@ -8,13 +8,14 @@ class SortAlgorithm
 {
 public:
     // функция вызова сортировки
-    static double *quick_sort(double *arr_for_sort, int n)
+    template <typename T>
+    static T *quick_sort(T *arr_for_sort, int n)
     {
         if (arr_for_sort == nullptr)
         {
             throw std::runtime_error("Cannot sort a null array.");
         }
-        double *result = new double[n]; // копируем начальным массив
+        T *result = new T[n]; // копируем начальным массив
         for (int i = 0; i < n; i++)
         {
             result[i] = arr_for_sort[i];
@@ -28,7 +29,8 @@ public:
      Процесс рекурсивно повторяется для каждого подмассива, пока их длина не будет равна 1
      На выходе получается отсортированный по возрастанию массив*/
 private:
-    static void quick_sort_method(double *array, int low, int high)
+    template <typename T>
+    static void quick_sort_method(T *array, int low, int high)
     {
         // проверка корректности границ
         if (ArrayProcessor::should_stop_sort(low, high))
@@ -37,8 +39,8 @@ private:
         }
         int i = low;                              // левый указатель на элемент массива
         int j = high;                             // правый указатель на элемент массива
-        double pivot = array[(int)((i + j) / 2)]; // пивот - у нас середина, првиедет к типу int , чтобы избажть дроби
-        double temp;                              // временным элемент буфер для смены элементов местами
+        T pivot = array[(int)((i + j) / 2)]; // пивот - у нас середина, првиедет к типу int , чтобы избажть дроби
+        T temp;                              // временным элемент буфер для смены элементов местами
         while (i <= j)                            // пока указаетли не встретятся
         {
             while (array[i] < pivot) // пока элемент < пивот - движемся влево

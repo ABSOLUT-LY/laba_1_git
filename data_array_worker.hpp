@@ -6,12 +6,12 @@
 #pragma once                    // предотвращает многократное включение этого файла при импорте
 
 /*Здесь хранятся только методы работы с данными класса и данные класса*/
-
+template <typename T>
 class Data_array_worker // класс для работы и харнения данных
 {
 private:                // доступно только внутри класса
     int n;              // размерность массива
-    double *arr;        // массив
+    T *arr;        // массив
     int negative_count; // колчиество отрицтальных элементов
 
 public: // доступно вне класса
@@ -95,7 +95,7 @@ public: // доступно вне класса
     // ввод и проверка массива для суммы
     void get_validated_array_for_sum()
     {
-        double *arr = ConsoleUI::get_array_elements(n);     // запрос у интерфейса элементов массива
+        T *arr = ConsoleUI::get_array_elements<T>(n);          // запрос у интерфейса элементов массива
         if (ArrayProcessor::valid_for_negative_sum(arr, n)) // проверка массива на валидность
         {
             delete[] this->arr; // особождаем старый массив (хоть и не использовали, но он ячейка!)
@@ -113,8 +113,8 @@ public: // доступно вне класса
     // ввод и проверка массива для сортировки
     void get_validated_array_for_sort()
     {
-        double *arr = ConsoleUI::get_array_elements(n); // запрос у интерфейса элементов массива
-        if (ArrayProcessor::valid_for_sort(arr))        // проверка массива на валидность
+        T *arr = ConsoleUI::get_array_elements<T>(n); // запрос у интерфейса элементов массива
+        if (ArrayProcessor::valid_for_sort(arr))   // проверка массива на валидность
         {
             delete[] this->arr; // особождаем старый массив (хоть и не использовали, но он ячейка!)
             this->arr = arr;    // присваиваем
@@ -140,9 +140,73 @@ public: // доступно вне класса
         return this->negative_count; // возвращаем количество отрицатльных элементов
     }
 
-    // функция для сортировки массива
-    double *sort_array()
+    // функция для присвоения классу уже готового массива
+    void get_validated_array_for_sort(T *array)
+    {
+        if (ArrayProcessor::valid_for_sort(array)) // проверка массива на валидность
+        {
+            delete[] this->arr; // особождаем старый массив (хоть и не использовали, но он ячейка!)
+            this->arr = array;  // присваиваем
+            return;             // выходим из функции
+        }
+        else
+        {
+            this->arr = nullptr; // присваиваем Nullptr если не валидный
+            return;              // выходим из функции
+        }
+    }
+
+    // проверка на валидность размерности массива для суммы
+    void get_validated_array_dimension_for_sort(int size)
+    {
+        if (ArrayProcessor::valid_array_size(size, ValidationType::FOR_SORT)) // проверка размернсоти на валидность
+        {
+            this->n = size; // если валидный -присваиваем
+            return;         // выходим из цикла и функции
+        }
+        throw std::invalid_argument("invalid dimension");
+    }
+
+    // функция класса для сортировки массива
+    T *sort_array()
     {
         return SortAlgorithm::quick_sort(this->arr, this->n);
+    }
+
+    // колчиество вхождений в массив
+    static int count_of_occurrences_in_array(T *array, int size, T elem)
+    {
+        int counter = 0;
+        for (int i = 0; i < size; i++)
+        {
+            if (array[i] == elem)
+            {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    // поиск максимального элемента массива, входящего в него боле раза
+    T find_max_elem_occurrences_in_array_more_than_1_time(T *array, int size)
+    {
+        try
+        {
+            get_validated_array_dimension_for_sort(size);
+        }
+        catch (const std::invalid_argument &e)
+        {
+            throw(std::invalid_argument("incorrect dimension"));
+        }
+        get_validated_array_for_sort(array);
+        T* array_sorted = sort_array();
+        for (int i = 0; i < this->n; i++)
+        {
+            if (count_of_occurrences_in_array(array_sorted, this->n, array_sorted[this->n - i]) > 1)
+            {
+                return arr[this->n - i];
+            }
+        }
+        throw (std::invalid_argument("the array is unique"));
     }
 };

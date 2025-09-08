@@ -73,7 +73,8 @@ public:
     }
 
     // проверка на валидоность массива для суммы
-    static bool valid_for_negative_sum(double *arr, int n)
+    template <typename T>
+    static bool valid_for_negative_sum(T *arr, int n)
     {
         if (arr == nullptr)
             return false;
@@ -93,7 +94,8 @@ public:
     }
 
     // проверка массива на валидность для сортировки
-    static bool valid_for_sort(double *arr)
+    template <typename T>
+    static bool valid_for_sort(T *arr)
     {
         if (arr == nullptr)
             return false;
@@ -101,7 +103,8 @@ public:
     }
 
     // проверка что массив не нулевой указатель перед анчалом выполнения работы для класса Data
-    static bool valid_array_no_null(double *arr)
+    template <typename T>
+    static bool valid_array_no_null(T *arr)
     {
         if (arr == nullptr)
         {
@@ -111,7 +114,8 @@ public:
     }
 
     // проверка что результат работы не нулевой указаетль для класса Aplication
-    static bool valid_result_for_output_process_1(double *result_of_process_1)
+    template <typename T>
+    static bool valid_result_for_output_process_1(T *result_of_process_1)
     {
         return valid_array_no_null(result_of_process_1);
     }
@@ -122,5 +126,19 @@ public:
         return low >= high; // проверка правильности границ массива.
 
         /*Очевидно, что если массив начинается с индекса 5 и кончается индексом 0, то что то не так*/
+    }
+
+    // функция проверки вхождения элемента в массив
+    template <typename T>
+    static bool in_arr(T *array, T elem, int size)
+    {
+        for (int i = 0; i < size; i++)
+        {
+            if (array[i] == elem)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 };

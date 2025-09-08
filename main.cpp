@@ -1,13 +1,15 @@
-#include <iostream>                   // ввыод/вывод
-#include "common_constants.hpp"       // импор для namespace contains
-#include "console_ui.hpp"             // импорт для работы с консольным интерфейсом
-#include "array_processor.hpp"        // импорт для проверки данных на валидность
-#include "data_array_worker.hpp"      // класс для работы с массивами
-#include "data_file_worker.hpp"       // класс для работы с фалами
-#include "data_string_worker.hpp"     // класс для работы с строками
-#include "string_processor.hpp"       // класс для проверки валдности строк
-#include "error_type.hpp"             // класс с типами ошибок
-#include "screen_console_options.hpp" //для вариантов выбора сообщений
+#include <iostream>                        // ввыод/вывод
+#include "common_constants.hpp"            // импор для namespace contains
+#include "console_ui.hpp"                  // импорт для работы с консольным интерфейсом
+#include "array_processor.hpp"             // импорт для проверки данных на валидность
+#include "data_array_worker.hpp"           // класс для работы с массивами
+#include "data_file_worker.hpp"            // класс для работы с фалами
+#include "data_string_worker.hpp"          // класс для работы с строками
+#include "string_processor.hpp"            // класс для проверки валдности строк
+#include "error_type.hpp"                  // класс с типами ошибок
+#include "screen_console_options.hpp"      //для вариантов выбора сообщений
+#include "data_matrix_worker.hpp"          // для работы с матрицами
+#include "result_matrix_worker_struct.hpp" //струкутра для результатов matrix_worker
 
 using namespace std; // для доступа к функциям из std без написания std::
 
@@ -25,12 +27,13 @@ private: // методы доступные внутри класса
     ConsoleUI ui;                так как используются тольк остатические методы
                                 (которым не нужен экемпляр)*/
 
-    Data_array_worker ex_1;   // экземпляр класса для возможности работать с его полями и методами
+    Data_array_worker<double> ex_1; // экземпляр класса для возможности работать с его полями и методами
+    Data_matrix_worker<int> ex_2;
     Data_file_worker f_3;     // экземпляр класса для задания 3 - хранит в себе имя файла пользователя
     Data_string_worker str_3; // экземпляр класса для задания 3 - хранит в себе содержимое фала пользхователя
 
     // функция для действия 1 задания 1 в терминале
-    void process_1_terminal()
+    void process_1_terminal_exercise_1()
     {
         ConsoleUI::clear_terminal();                                       // очищаем терминал перед работой
         ConsoleUI::handler_screen_exercise_1(Exercise_1::DIMENSION_INPUT); // вывод собщения о вводе размерности
@@ -43,7 +46,7 @@ private: // методы доступные внутри класса
             }
             catch (const std::invalid_argument &e)
             {
-                ConsoleUI::handler_error_message_dimension(Error_dimension::SUM_ERROR);
+                ConsoleUI::handler_error_message_dimension(Error_dimension_array::SUM_ERROR);
                 continue;
             }
         }
@@ -52,9 +55,9 @@ private: // методы доступные внутри класса
         ex_1.get_validated_array_for_sum();                            // вызывае тввод элементов массива для экхемпляра класса
         try
         {
-            double *result = ex_1.calculate_result_for_process_1();             // высчитываем результат действия первого: или массив или nullptr
-            ConsoleUI::output_res_process_1(result, ex_1.get_negative_count()); // вызов функции консоли для вывода результата
-            ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG);  // диалог о возврщении на главный экран
+            double *result = ex_1.calculate_result_for_process_1();                        // высчитываем результат действия первого: или массив или nullptr
+            ConsoleUI::output_res_process_1_exercise_1(result, ex_1.get_negative_count()); // вызов функции консоли для вывода результата
+            ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG);             // диалог о возврщении на главный экран
         }
         catch (const std::invalid_argument &e)
         {
@@ -69,13 +72,13 @@ private: // методы доступные внутри класса
     }
 
     // функция для действия 2 задания 1 в терминале
-    void process_2_terminal()
+    void process_2_termina_exercise_1()
     {
         /*ЗАХАР ВОТ ТУТ ТЕБЕ НАДО БУДЕТ ПИСАТЬ*/
     }
 
     // функция для действия 3 задания 1 в терминале
-    void process_3_terminal()
+    void process_3_terminal_exercise_1()
     {
         ConsoleUI::clear_terminal();                                       // очищаем терминал перед работой
         ConsoleUI::handler_screen_exercise_1(Exercise_1::DIMENSION_INPUT); // вывод собщения о вводе размерности
@@ -88,17 +91,107 @@ private: // методы доступные внутри класса
             }
             catch (const std::invalid_argument &e)
             {
-                ConsoleUI::handler_error_message_dimension(Error_dimension::SORT_ERROR);
+                ConsoleUI::handler_error_message_dimension(Error_dimension_array::SORT_ERROR);
                 continue;
             }
         }
-        ConsoleUI::clear_terminal();                                       // очищаем терминал для следующего сообщения
-        ConsoleUI::handler_screen_exercise_1(Exercise_1::ARRAY_INPUT);     // вывод сообщщения о вводе элементов массива
-        ex_1.get_validated_array_for_sort();                               // вызывае тввод элементов массива для экхемпляра класса
-        double *result = ex_1.sort_array();                                // высчитываем результат действия первого: или массив или nullptr
-        ConsoleUI::output_res_process_3(result, ex_1.get_size());          // вызов функции консоли для вывода результата
-        ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возврщении на главный экран
+        ConsoleUI::clear_terminal();                                         // очищаем терминал для следующего сообщения
+        ConsoleUI::handler_screen_exercise_1(Exercise_1::ARRAY_INPUT);       // вывод сообщщения о вводе элементов массива
+        ex_1.get_validated_array_for_sort();                                 // вызывае тввод элементов массива для экхемпляра класса
+        double *result = ex_1.sort_array();                                  // высчитываем результат действия первого: или массив или nullptr
+        ConsoleUI::output_res_process_3_exercise_1(result, ex_1.get_size()); // вызов функции консоли для вывода результата
+        ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG);   // диалог о возврщении на главный экран
         // деструктор будет вызван автоматически при выходе из блока кода
+    }
+
+    void process_1_terminal_exercise_2()
+    {
+        ConsoleUI::clear_terminal();
+        ConsoleUI::handler_screen_exercise_2(Exercise_2::COUNT_ROWS_INPUT);
+        while (true) // пока ввод размерности не будет правильным
+        {
+            try
+            {
+                ex_2.get_matrix_row_count(); // вызывает ввод размерности массива для экземпляра класса
+                break;
+            }
+            catch (const std::invalid_argument &e)
+            {
+                ConsoleUI::handler_error_message_dimension_matrix(Error_dimension_matrix::INVALID_ROW_COUNT);
+                continue;
+            }
+        }
+        ConsoleUI::clear_terminal();
+        ConsoleUI::handler_screen_exercise_2(Exercise_2::COUNT_COLUMN_INPUT);
+        while (true) // пока ввод размерности не будет правильным
+        {
+            try
+            {
+                ex_2.get_matrix_column_count(); // вызывает ввод размерности массива для экземпляра класса
+                break;
+            }
+            catch (const std::invalid_argument &e)
+            {
+                ConsoleUI::handler_error_message_dimension_matrix(Error_dimension_matrix::INVALID_COLUMN_COUNT);
+                continue;
+            }
+        }
+        ConsoleUI::clear_terminal();
+        ConsoleUI::handler_screen_exercise_2(Exercise_2::MATRIX_INPUT);
+        ex_2.get_matrix_elements();
+        ConsoleUI::clear_terminal();
+        ZeroFreeRowIndexes result = ex_2.calculate_result_action_1();
+        ConsoleUI::output_res_process_1_exercise_2(result, ex_2.get_count_zeros_contain_rows());
+        ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возврщении на главный экран
+    }
+
+    void process_2_terminal_exercise_2()
+    {
+        ConsoleUI::clear_terminal();
+        ConsoleUI::handler_screen_exercise_2(Exercise_2::COUNT_ROWS_INPUT);
+        while (true) // пока ввод размерности не будет правильным
+        {
+            try
+            {
+                ex_2.get_matrix_row_count(); // вызывает ввод размерности массива для экземпляра класса
+                break;
+            }
+            catch (const std::invalid_argument &e)
+            {
+                ConsoleUI::handler_error_message_dimension_matrix(Error_dimension_matrix::INVALID_ROW_COUNT);
+                continue;
+            }
+        }
+        ConsoleUI::clear_terminal();
+        ConsoleUI::handler_screen_exercise_2(Exercise_2::COUNT_COLUMN_INPUT);
+        while (true) // пока ввод размерности не будет правильным
+        {
+            try
+            {
+                ex_2.get_matrix_column_count(); // вызывает ввод размерности массива для экземпляра класса
+                break;
+            }
+            catch (const std::invalid_argument &e)
+            {
+                ConsoleUI::handler_error_message_dimension_matrix(Error_dimension_matrix::INVALID_COLUMN_COUNT);
+                continue;
+            }
+        }
+        ConsoleUI::clear_terminal();
+        ConsoleUI::handler_screen_exercise_2(Exercise_2::MATRIX_INPUT);
+        ex_2.get_matrix_elements();
+        ConsoleUI::clear_terminal();
+        try
+        {
+            MaxElemAndIndex result = ex_2.calculate_result_action_2();
+            ConsoleUI::output_res_process_2_exercise_2(result);
+            ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возврщении на главный экран
+        }
+        catch (const std::invalid_argument &e)
+        {
+            ConsoleUI::handler_error_message_matrix_content(Error_matrix::INVALID_MATRIX_FOR_FIND_SUM);
+            ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возврщении на главный экран
+        }
     }
 
     // задание 1
@@ -112,14 +205,37 @@ private: // методы доступные внутри класса
             cin >> k; // ввод номера действия
             switch (k)
             {
-            case 1:                   // к == 1 действие 1
-                process_1_terminal(); // запуск действия 1
-                return;               // выход из While и switch - конец выполнения функции
-            case 2:                   // к == 2 действие 2
+            case 1:                              // к == 1 действие 1
+                process_1_terminal_exercise_1(); // запуск действия 1
+                return;                          // выход из While и switch - конец выполнения функции
+            case 2:                              // к == 2 действие 2
                 /*ЗДЕСЬ ПОТОМ ДАПИСАТЬ ВТОРОЕ ДЕЙСТВИЕ*/
                 return;                                                                 // выход из While и switch - конец выполнения функции
             case 3:                                                                     // к == 3 - действие 3
-                process_3_terminal();                                                   // запуск действия 3
+                process_3_terminal_exercise_1();                                        // запуск действия 3
+                return;                                                                 // выход из While и switch - конец выполнения функции
+            default:                                                                    // Нет такого действия
+                ConsoleUI::handler_error_main_app(App_error::INVALID_OPERATION_NUMBER); // вывод сообщения о ошибке номера операции
+                break;                                                                  // выход из switch и вход назад в while
+            }
+        }
+    }
+
+    void screen_exercise_2_terminal()
+    {
+        ConsoleUI::clear_terminal();                          // очистка терминала перед началом работы
+        int k = 0;                                            // Номер оперцаии
+        ConsoleUI::handler_screen_programm(AppOptions::EX_2); // вывод сообщений с возможными действиями
+        while (true)                                          // бесконечный цикл для возможности многократного ввода пользователем
+        {
+            cin >> k; // ввод номера действия
+            switch (k)
+            {
+            case 1:                              // к == 1 действие 1
+                process_1_terminal_exercise_2(); // запуск действия 1
+                return;                          // выход из While и switch - конец выполнения функции
+            case 2:                              // к == 2 действие 2
+                process_2_terminal_exercise_2();
                 return;                                                                 // выход из While и switch - конец выполнения функции
             default:                                                                    // Нет такого действия
                 ConsoleUI::handler_error_main_app(App_error::INVALID_OPERATION_NUMBER); // вывод сообщения о ошибке номера операции
@@ -178,11 +294,13 @@ private: // методы доступные внутри класса
             cin >> k; // ввод номера действия
             switch (k)
             {
-            case 1:                                                                     // к == 1 действие 1
-                screen_exercise_1_terminal();                                           // отображение меню действия 1
-                terminal_process();                                                     // после окончания работы действия 1 и диалога возврата на главный экран, если не выборал "N\n"
-                break;                                                                  // выход из свитч
-            case 2:                                                                     // к == 2 действие 2
+            case 1:                           // к == 1 действие 1
+                screen_exercise_1_terminal(); // отображение меню действия 1
+                terminal_process();           // после окончания работы действия 1 и диалога возврата на главный экран, если не выборал "N\n"
+                break;                        // выход из свитч
+            case 2:                           // к == 2 действие 2
+                screen_exercise_2_terminal();
+                terminal_process();
                 break;                                                                  // выход из свитч
             case 3:                                                                     // к == 3 действие 3
                 screen_exercise_3_terminal();                                           // отображение меню действия 1

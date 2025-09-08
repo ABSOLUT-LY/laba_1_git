@@ -6,7 +6,7 @@
 // !предоставляет выбор вариатнов!
 
 // ДЛЯ МАССИВОВ
-enum class Error_dimension
+enum class Error_dimension_array
 {
     SORT_ERROR,   // 1 - сортиоровка
     SUM_ERROR,    // 1 - сортиоровка
@@ -17,7 +17,7 @@ enum class Error_dimension
 enum class Error_string
 {
     SYMBOLS_ERROR,         // 0 - ошибка символов
-    CONTENT_STRING_ERROR,   // 1
+    CONTENT_STRING_ERROR,  // 1
     COUNT_SENTENCES_ERROR, // 2 - ошибка количетсва предложений
 };
 
@@ -39,4 +39,15 @@ enum class App_error
     // Общие ошибки ввода
     INVALID_OPERATION_NUMBER,
     UNKNOWN_ERROR,
+};
+
+enum class Error_dimension_matrix
+{
+    INVALID_ROW_COUNT,
+    INVALID_COLUMN_COUNT
+};
+
+enum class Error_matrix
+{
+    INVALID_MATRIX_FOR_FIND_SUM,
 };

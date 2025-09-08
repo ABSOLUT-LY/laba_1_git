@@ -20,6 +20,14 @@ enum class Exercise_1
     Action_3
 };
 
+enum class Exercise_2
+{
+    COUNT_ROWS_INPUT,
+    COUNT_COLUMN_INPUT,
+    MATRIX_INPUT
+};
+
+
 enum class Exercise_3
 {
     FILE_NAME,

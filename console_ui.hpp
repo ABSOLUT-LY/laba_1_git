@@ -1,8 +1,9 @@
-#include <iostream>                   // ввыод/вывод
-#include "common_constants.hpp"       // импор для namespace contains
-#include "error_type.hpp"             // для ValidationType
-#include <istream>                    // для getline
-#include "screen_console_options.hpp" //для вариатнов выбора в консоли
+#include <iostream>                        // ввыод/вывод
+#include "common_constants.hpp"            // импор для namespace contains
+#include "error_type.hpp"                  // для ValidationType
+#include <istream>                         // для getline
+#include "screen_console_options.hpp"      //для вариатнов выбора в консоли
+#include "result_matrix_worker_struct.hpp" //струкутра для результатов matrix_worker
 
 #pragma once // предотвращает многократное включение этого файла при импорте
 
@@ -52,8 +53,45 @@ private:
         cout << "Enter the array elements (separated by enter):" << endl;
     }
 
+    // сообщение о вводе количества строк
+    static void message_input_matrix_row_count()
+    {
+        cout << "Enter the number of matrix rows: " << endl;
+    }
+
+    // сообщение о вводе количества столбцов
+    static void message_input_matrix_column_count()
+    {
+        cout << "Enter the number of columns in the matrix: " << endl;
+    }
+
+    // сообщение о вводе колчетсва столбцов
+    static void message_input_matrix()
+    {
+        cout << "Enter matrix elements: " << endl;
+    }
+
+    // сообщение  ошибке колччества строк
+    static void error_message_row_count()
+    {
+        cout << "Error, the number of rows must not be less than 1" << endl;
+    }
+
+    // сообщение о ошибке оклчества строк
+    static void error_message_column_count()
+    {
+        cout << "Error, the number of columns must not be less than 1" << endl;
+    }
+
+    // сообщение о ошибке содержания матрицы для поиска элемента встречащегося более 1 раза
+    static void error_matrix_is_unique()
+    {
+        cout << "The array is unique, it is impossible to complete the task" << endl;
+    }
+
     // сообщение о ошибке наличия негативных элементов
-    static void error_message_negative_count(int nc)
+    static void
+    error_message_negative_count(int nc)
     {
         cout << "Error, no negative elements" << endl;
     }
@@ -159,10 +197,18 @@ private:
         cout << "Select and enter the number of the operation you need:" << "\t";
     }
 
+    // отрисовка экарана задания 2
+    static void message_exercise_2_screen()
+    {
+        cout << "1" << "\t" << "The number of rows that do not contain any zero elements and their coordinates;" << endl;
+        cout << "2" << "\t" << "The maximum number that appears in the given matrix more than once and its position in the array" << endl;
+        cout << "Select and enter the number of the operation you need:" << "\t";
+    }
+
     // отрисовка экарана задания 3
     static void message_exercise_3_screen()
     {
-        cout << "";
+        cout << "" << endl;
     }
 
     // диалог для возврата на главный экран
@@ -238,9 +284,10 @@ public:
     }
 
     // Ввод элементов массива
-    static double *get_array_elements(int n)
+    template <typename T>
+    static T *get_array_elements(int n)
     {
-        double *arr = new double[n];
+        T *arr = new T[n];
         for (int i = 0; i < n; i++)
         {
             cin >> arr[i];
@@ -248,9 +295,44 @@ public:
         return arr;
     }
 
+    // ввод колчиество строк матрицы
+    static int get_row_count()
+    {
+        int row_count;
+        cin >> row_count;
+        return row_count;
+    }
+
+    // ввод кличество строк матрицы
+    static int get_column_count()
+    {
+        int column_count;
+        cin >> column_count;
+        return column_count;
+    }
+
+    // ввод элементов матрицы
+    template <typename T>
+    static T **get_matrix_elements(int row_count, int column_count)
+    {
+        T **matrix = new T *[row_count];
+        T *tmp;
+        for (int i = 0; i < row_count; i++)
+        {
+            tmp = new T[column_count];
+            for (int g = 0; g < column_count; g++)
+            {
+                cin >> tmp[g];
+            }
+            matrix[i] = tmp;
+        }
+        return matrix;
+    }
+
     // ФУНКЦИИ ДЛЯ ВЫВОДА РЕЗУЛЬТАТОВ РАБОТЫ ПРОЦЕССОВ
+
     // вывод рещультата задачи 1 процесса 1
-    static void output_res_process_1(double *result_process_1, int negative_count)
+    static void output_res_process_1_exercise_1(double *result_process_1, int negative_count)
     {
         // Вывод количества отрицательных элементов
         cout << "Number of negative elements \t" << result_process_1[negative_count + 1] << endl;
@@ -268,7 +350,7 @@ public:
     }
 
     // вывод рещультата задачи 1 процесса 3
-    static void output_res_process_3(double *result_process_2, int n)
+    static void output_res_process_3_exercise_1(double *result_process_2, int n)
     {
         cout << "Sorted array using Quicksort method: ";
         for (int i = 0; i < n; i++)
@@ -276,6 +358,24 @@ public:
             cout << result_process_2[i] << " ";
         }
         cout << endl;
+    }
+
+    static void output_res_process_1_exercise_2(ZeroFreeRowIndexes result, int n)
+    {
+        cout << "Number of rows that do not contain any null elements: " << result.count << endl;
+        cout << "Coordinates of rows that do not contain any zero elements: ";
+        for (int i = 0; i < n; i++)
+        {
+            cout << result.indexes[i] << " ";
+        }
+        cout << endl;
+    }
+
+    template <typename T>
+    static void output_res_process_2_exercise_2(MaxElemAndIndex <T> result)
+    {
+        cout << "The maximum element of a matrix that occurs more than once: " << result.max_elem << endl;
+        cout << "Coordinates: Х = " << result.index_x << " Y = " << result.index_y << endl;
     }
 
     // вывод рещультата задачи 3
@@ -302,6 +402,7 @@ public:
             message_exercise_1_screen();
             break;
         case AppOptions::EX_2:
+            message_exercise_2_screen();
             break;
         case AppOptions::EX_3:
             message_exercise_3_screen();
@@ -325,6 +426,24 @@ public:
             break;
         case Exercise_1::DIMENSION_INPUT:
             message_input_dimension_array();
+        default:
+            break;
+        }
+    }
+
+    static void handler_screen_exercise_2(Exercise_2 value)
+    {
+        switch (value)
+        {
+        case Exercise_2::COUNT_COLUMN_INPUT:
+            message_input_matrix_column_count();
+            break;
+        case Exercise_2::COUNT_ROWS_INPUT:
+            message_input_matrix_row_count();
+            break;
+        case Exercise_2::MATRIX_INPUT:
+            message_input_matrix();
+            break;
         default:
             break;
         }
@@ -375,16 +494,43 @@ public:
     }
 
     // вывод сообщения о ошибке раземрности
-    static void handler_error_message_dimension(Error_dimension type_error)
+    static void handler_error_message_dimension(Error_dimension_array type_error)
     {
         switch (type_error)
         {
-        case Error_dimension::SUM_ERROR:
+        case Error_dimension_array::SUM_ERROR:
             error_message_dimension_lower_than_2(); // размерность меньше 2 или более буфера - нельзя найти сумму
             return;
-        case Error_dimension::SORT_ERROR:
+        case Error_dimension_array::SORT_ERROR:
             error_message_dimension_lower_than_1(); // размерность меньше 1 или более буфера- нельзя сортировать
             return;
+        }
+    }
+
+    static void handler_error_message_dimension_matrix(Error_dimension_matrix type_error)
+    {
+        switch (type_error)
+        {
+        case Error_dimension_matrix::INVALID_ROW_COUNT:
+            error_message_row_count();
+            break;
+        case Error_dimension_matrix::INVALID_COLUMN_COUNT:
+            error_message_column_count();
+            break;
+        default:
+            break;
+        }
+    }
+
+    static void handler_error_message_matrix_content(Error_matrix type_error)
+    {
+        switch (type_error)
+        {
+        case Error_matrix::INVALID_MATRIX_FOR_FIND_SUM:
+            error_matrix_is_unique();
+            break;
+        default:
+            break;
         }
     }
 
