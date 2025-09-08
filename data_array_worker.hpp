@@ -69,15 +69,13 @@ public: // доступно вне класса
     // ввод и проверка на валидность размерности массива для суммы
     void get_validated_array_dimension_for_sum()
     {
-        while (true) // пока ввод размерности не будет правильным
+        int size = ConsoleUI::get_array_size();                              // запрос раземерности у интерфейса
+        if (ArrayProcessor::valid_array_size(size, ValidationType::FOR_SUM)) // проверка размернсоти на валидность
         {
-            int size = ConsoleUI::get_array_size();                              // запрос раземерности у интерфейса
-            if (ArrayProcessor::valid_array_size(size, ValidationType::FOR_SUM)) // проверка размернсоти на валидность
-            {
-                this->n = size; // если валидный -присваиваем
-                return;         // выходим из цикла и функции
-            }
+            this->n = size; // если валидный -присваиваем
+            return;         // выходим из цикла и функции
         }
+        throw std::invalid_argument("invalid dimension");
     }
 
     // ввод и проверка на валидность размерности массива для сортировки

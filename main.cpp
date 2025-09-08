@@ -34,13 +34,25 @@ private: // методы доступные внутри класса
     {
         ConsoleUI::clear_terminal();                                       // очищаем терминал перед работой
         ConsoleUI::handler_screen_exercise_1(Exercise_1::DIMENSION_INPUT); // вывод собщения о вводе размерности
-        ex_1.get_validated_array_dimension_for_sum();                      // вызывает ввод размерности массива для экземпляра класса.Д
-        ConsoleUI::clear_terminal();                                       // очищаем терминал для следующего сообщения
-        ConsoleUI::handler_screen_exercise_1(Exercise_1::ARRAY_INPUT);     // вывод сообщщения о вводе элементов массива
-        ex_1.get_validated_array_for_sum();                                // вызывае тввод элементов массива для экхемпляра класса
+        while (true)                                                       // пока ввод размерности не будет правильным
+        {
+            try
+            {
+                ex_1.get_validated_array_dimension_for_sum(); // вызывает ввод размерности массива для экземпляра класса
+                break;
+            }
+            catch (const std::invalid_argument &e)
+            {
+                ConsoleUI::handler_error_message_dimension(Error_dimension::SUM_ERROR);
+                continue;
+            }
+        }
+        ConsoleUI::clear_terminal();                                   // очищаем терминал для следующего сообщения
+        ConsoleUI::handler_screen_exercise_1(Exercise_1::ARRAY_INPUT); // вывод сообщщения о вводе элементов массива
+        ex_1.get_validated_array_for_sum();                            // вызывае тввод элементов массива для экхемпляра класса
         try
         {
-            double *result = ex_1.calculate_result_for_process_1(); // высчитываем результат действия первого: или массив или nullptr
+            double *result = ex_1.calculate_result_for_process_1();             // высчитываем результат действия первого: или массив или nullptr
             ConsoleUI::output_res_process_1(result, ex_1.get_negative_count()); // вызов функции консоли для вывода результата
             ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG);  // диалог о возврщении на главный экран
         }
@@ -67,7 +79,19 @@ private: // методы доступные внутри класса
     {
         ConsoleUI::clear_terminal();                                       // очищаем терминал перед работой
         ConsoleUI::handler_screen_exercise_1(Exercise_1::DIMENSION_INPUT); // вывод собщения о вводе размерности
-        ex_1.get_validated_array_dimension_for_sort();                     // вызывает ввод размерности массива для экземпляра класса
+        while (true)                                                       // пока ввод размерности не будет правильным
+        {
+            try
+            {
+                ex_1.get_validated_array_dimension_for_sum(); // вызывает ввод размерности массива для экземпляра класса
+                break;
+            }
+            catch (const std::invalid_argument &e)
+            {
+                ConsoleUI::handler_error_message_dimension(Error_dimension::SORT_ERROR);
+                continue;
+            }
+        }
         ConsoleUI::clear_terminal();                                       // очищаем терминал для следующего сообщения
         ConsoleUI::handler_screen_exercise_1(Exercise_1::ARRAY_INPUT);     // вывод сообщщения о вводе элементов массива
         ex_1.get_validated_array_for_sort();                               // вызывае тввод элементов массива для экхемпляра класса

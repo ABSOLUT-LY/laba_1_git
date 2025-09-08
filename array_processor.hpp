@@ -15,7 +15,6 @@ public:
     {
         if (size > Constants::MAX_BUF)
         {
-            ConsoleUI::handler_error_message_dimension(Error_dimension::BUFF_ERROR);
             return false;
         }
         switch (type_operation)
@@ -23,14 +22,12 @@ public:
         case ValidationType::FOR_SUM:
             if (size < 2)
             {
-                ConsoleUI::handler_error_message_dimension(Error_dimension::SUM_ERROR);
                 return false;
             }
             break;
         case ValidationType::FOR_SORT:
             if (size < 1)
             {
-                ConsoleUI::handler_error_message_dimension(Error_dimension::SORT_ERROR);
                 return false;
             }
             break;
@@ -49,7 +46,6 @@ public:
     {
         if (size > Constants::MAX_BUF)
         {
-            ConsoleUI::handler_error_message_dimension(Error_dimension::BUFF_ERROR);
             return false;
         }
         switch (type_operation)
@@ -57,14 +53,12 @@ public:
         case ValidationType::FOR_SUM:
             if (size < 2)
             {
-                ConsoleUI::handler_error_message_dimension(Error_dimension::SUM_ERROR);
                 return false;
             }
             break;
         case ValidationType::FOR_SORT:
             if (size < 1)
             {
-                ConsoleUI::handler_error_message_dimension(Error_dimension::SORT_ERROR);
                 return false;
             }
             break;

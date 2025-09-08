@@ -8,7 +8,6 @@
 // ДЛЯ МАССИВОВ
 enum class Error_dimension
 {
-    BUFF_ERROR,   // 0 - сумма
     SORT_ERROR,   // 1 - сортиоровка
     SUM_ERROR,    // 1 - сортиоровка
     PRODUCT_ERROR // 2 - произведение

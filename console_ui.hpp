@@ -79,19 +79,19 @@ private:
     // сообщеине о ошибке резмерность более буфера
     static void error_message_dimension_biger_than_buff()
     {
-        cout << "Dimension greater than maximum buff" << endl;
+        cout << "Dimension greater than maximum buff: " << Constants::MAX_BUF << endl;
     }
 
     // сообщение о ошибке размерность мене 2
     static void error_message_dimension_lower_than_2()
     {
-        cout << "Dimension lower than 2" << endl;
+        cout << "Dimension lower than 2 or greater than maximum buff: " << Constants::MAX_BUF << endl;
     }
 
     // сообщение о ошибке размерность мене 1
     static void error_message_dimension_lower_than_1()
     {
-        cout << "Dimension lower than 1" << endl;
+        cout << "Dimension lower than 1 or greater than maximum buff: " << Constants::MAX_BUF << endl;
     }
 
     // вывод сообщения о ошибке символов
@@ -201,6 +201,7 @@ private:
         cout << "3. Exercise 3;" << endl;
         cout << "Select and enter the task number:" << "\t";
     }
+
 public:
     // Очистка терминала
     static void clear_terminal()
@@ -378,14 +379,11 @@ public:
     {
         switch (type_error)
         {
-        case Error_dimension::BUFF_ERROR:
-            error_message_dimension_biger_than_buff(); // размерность больше буфера
-            return;
         case Error_dimension::SUM_ERROR:
-            error_message_dimension_lower_than_2(); // размерность меньше 2 - нельзя найти сумму
+            error_message_dimension_lower_than_2(); // размерность меньше 2 или более буфера - нельзя найти сумму
             return;
         case Error_dimension::SORT_ERROR:
-            error_message_dimension_lower_than_1(); // размерность меньше 1 - нельзя сортировать
+            error_message_dimension_lower_than_1(); // размерность меньше 1 или более буфера- нельзя сортировать
             return;
         }
     }
