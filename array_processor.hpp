@@ -181,9 +181,20 @@ public:
     }
 
     // проверка индекса
-    template <typename T>
     static bool valid_ind_dimension(int ind, int n)
     {
         return (-1 < ind < n);
+    }
+
+    static bool valid_ind_in_indices(int ind, int n, int* arr, int ind_count)
+    {
+        for (int i = 0; i < ind_count; i++)
+        {
+            if (valid_ind_dimension(ind, n) && arr[i] == ind)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 };

@@ -16,10 +16,12 @@ private:                // доступно только внутри класс
     int negative_count; // колчиество отрицтальных элементов
     int ind_min;
     int ind_max;
+    Arr_and_size<int> min_ind_data;
+    Arr_and_size<int> max_ind_data;
 
 public: // доступно вне класса
     // конструктор по умолчанию
-    Data_array_worker() : n(0), arr(nullptr), negative_count(0), ind_max(-1), ind_min(-1) {} // через ":" мы инициализируем переменные сразу какие они нам нужны, тело {} пустое, так как мы уже присвоили им санчала нужные данные и действий не требуется
+    Data_array_worker() : n(0), arr(nullptr), negative_count(0), ind_max(-1), ind_min(-1), min_ind_data(), max_ind_data() {} // через ":" мы инициализируем переменные сразу какие они нам нужны, тело {} пустое, так как мы уже присвоили им санчала нужные данные и действий не требуется
     // деструктор
     ~Data_array_worker()
     {
@@ -305,7 +307,7 @@ public: // доступно вне класса
         T *arr_sorted = Data_array_worker::sort_array();
         int counter = 1;
         int i = 0;
-        while (arr_sorted[i] == arr_sorted[i + 1])
+        while (i < this->n - 1 && arr_sorted[i] == arr_sorted[i + 1])
         {
             i++;
             counter++;
@@ -319,7 +321,7 @@ public: // доступно вне класса
         T *arr_sorted = Data_array_worker::sort_array();
         int counter = 1;
         int i = 0;
-        while (arr_sorted[this->n - i - 1] == arr_sorted[this->n - i - 2])
+        while (i < this->n - 1 && arr_sorted[this->n - 1 - i] == arr_sorted[this->n - 2 - i])
         {
             i++;
             counter++;
@@ -332,34 +334,44 @@ public: // доступно вне класса
     {
         int *res = new int[Data_array_worker::count_max()];
         T *arr_sorted = Data_array_worker::sort_array();
-        int i = 0;
-        while (arr_sorted[this->n - i - 1] == arr_sorted[this->n - i - 2])
+        T max_value = arr_sorted[this->n - 1];
+        int count = count_max();
+        int res_index = 0;
+        for (int i = 0; i < this->n; i++)
         {
-            res[i] = i;
-            i++;
+            if (this->arr[i] == max_value)
+            {
+                res[res_index++] = i;
+            }
         }
-        res[i] = i;
-        return Arr_and_size<int>(res, i + 1);
+        delete[] arr_sorted;
+        this->max_ind_data = Arr_and_size<int>(res, res_index);
+        return Arr_and_size<int>(res, res_index);
     }
 
     Arr_and_size<int> min_index_arr()
     {
-        int *res = new int[Data_array_worker::count_min()];
+        int *res = new int[Data_array_worker::count_max()];
         T *arr_sorted = Data_array_worker::sort_array();
-        int i = 0;
-        while (arr_sorted[i] == arr_sorted[i + 1])
+        T min_value = arr_sorted[0];
+        int count = count_max();
+        int res_index = 0;
+        for (int i = 0; i < this->n; i++)
         {
-            res[i] = i;
-            i++;
+            if (this->arr[i] == min_value)
+            {
+                res[res_index++] = i;
+            }
         }
-        res[i] = i;
-        return Arr_and_size<int>(res, i + 1);
+        delete[] arr_sorted;
+        this->min_ind_data = Arr_and_size<int>(res, res_index);
+        return Arr_and_size<int>(res, res_index);
     }
 
     void get_max_ind()
     {
         int tmp = ConsoleUI::get_index();
-        if (ArrayProcessor::valid_ind_dimension<int>(tmp, this->n))
+        if (ArrayProcessor::valid_ind_in_indices(tmp, this->n, this->max_ind_data.arr, this->max_ind_data.size))
         {
             this->ind_max = tmp;
             return;
@@ -370,7 +382,7 @@ public: // доступно вне класса
     void get_min_ind()
     {
         int tmp = ConsoleUI::get_index();
-        if (ArrayProcessor::valid_ind_dimension<int>(tmp, this->n))
+        if (ArrayProcessor::valid_ind_in_indices(tmp, this->n, this->min_ind_data.arr, this->min_ind_data.size))
         {
             this->ind_min = tmp;
             return;
