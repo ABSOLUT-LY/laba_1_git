@@ -375,7 +375,7 @@ public:
     static void output_res_process_2_exercise_2(MaxElemAndIndex<T> result)
     {
         cout << "The maximum element of a matrix that occurs more than once: " << result.max_elem << endl;
-        cout << "Coordinates: Х = " << result.index_x << " Y = " << result.index_y << endl;
+        cout << "Coordinates: X = " << result.index_x << " Y = " << result.index_y << endl;
     }
 
     // вывод рещультата задачи 3
