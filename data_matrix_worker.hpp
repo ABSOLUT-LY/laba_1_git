@@ -133,6 +133,8 @@ public:
             {
                 if (matrix[y][x] == elem)
                 {
+                    result[0] = x;
+                    result[1] = y;
                     return result;
                 }
             }
