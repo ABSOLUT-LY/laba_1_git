@@ -3,7 +3,8 @@
 #include "sort_algorithm.hpp"   // для доступа к алгоритмам сортировки
 #include "validation_type.hpp"  // для ValidationType
 #include "console_ui.hpp"       // импорт для работы с консольным интерфейсом
-#pragma once                    // предотвращает многократное включение этого файла при импорте
+#include "result_array_worker_struct.hpp"
+#pragma once // предотвращает многократное включение этого файла при импорте
 
 /*Здесь хранятся только методы работы с данными класса и данные класса*/
 template <typename T>
@@ -11,12 +12,14 @@ class Data_array_worker // класс для работы и харнения д
 {
 private:                // доступно только внутри класса
     int n;              // размерность массива
-    T *arr;        // массив
+    T *arr;             // массив
     int negative_count; // колчиество отрицтальных элементов
+    int ind_min;
+    int ind_max;
 
 public: // доступно вне класса
     // конструктор по умолчанию
-    Data_array_worker() : n(0), arr(nullptr), negative_count(0) {} // через ":" мы инициализируем переменные сразу какие они нам нужны, тело {} пустое, так как мы уже присвоили им санчала нужные данные и действий не требуется
+    Data_array_worker() : n(0), arr(nullptr), negative_count(0), ind_max(-1), ind_min(-1) {} // через ":" мы инициализируем переменные сразу какие они нам нужны, тело {} пустое, так как мы уже присвоили им санчала нужные данные и действий не требуется
     // деструктор
     ~Data_array_worker()
     {
@@ -92,10 +95,21 @@ public: // доступно вне класса
         }
     }
 
+    void get_validated_array_dimension_for_product()
+    {
+        int size = ConsoleUI::get_array_size();                                  // запрос раземерности у интерфейса
+        if (ArrayProcessor::valid_array_size(size, ValidationType::FOR_PRODUCT)) // проверка размернсоти на валидность
+        {
+            this->n = size; // если валидный -присваиваем
+            return;         // выходим из цикла и функции
+        }
+        throw std::invalid_argument("invalid demenison");
+    }
+
     // ввод и проверка массива для суммы
     void get_validated_array_for_sum()
     {
-        T *arr = ConsoleUI::get_array_elements<T>(n);          // запрос у интерфейса элементов массива
+        T *arr = ConsoleUI::get_array_elements<T>(n);       // запрос у интерфейса элементов массива
         if (ArrayProcessor::valid_for_negative_sum(arr, n)) // проверка массива на валидность
         {
             delete[] this->arr; // особождаем старый массив (хоть и не использовали, но он ячейка!)
@@ -114,7 +128,25 @@ public: // доступно вне класса
     void get_validated_array_for_sort()
     {
         T *arr = ConsoleUI::get_array_elements<T>(n); // запрос у интерфейса элементов массива
-        if (ArrayProcessor::valid_for_sort(arr))   // проверка массива на валидность
+        if (ArrayProcessor::valid_for_sort(arr))      // проверка массива на валидность
+        {
+            delete[] this->arr; // особождаем старый массив (хоть и не использовали, но он ячейка!)
+            this->arr = arr;    // присваиваем
+            return;             // выходим из функции
+        }
+        else
+        {
+            delete[] arr;        // очизаем память если не валидный
+            this->arr = nullptr; // присваиваем Nullptr если не валидный
+            return;              // выходим из функции
+        }
+    }
+
+    // ввод и проверка массива для сортировки
+    void get_validated_array_for_product()
+    {
+        T *arr = ConsoleUI::get_array_elements<T>(n); // запрос у интерфейса элементов массива
+        if (ArrayProcessor::valid_for_sort(arr))      // проверка массива на валидность
         {
             delete[] this->arr; // особождаем старый массив (хоть и не использовали, но он ячейка!)
             this->arr = arr;    // присваиваем
@@ -199,7 +231,7 @@ public: // доступно вне класса
             throw(std::invalid_argument("incorrect dimension"));
         }
         get_validated_array_for_sort(array);
-        T* array_sorted = sort_array();
+        T *array_sorted = sort_array();
         for (int i = 0; i < this->n; i++)
         {
             if (count_of_occurrences_in_array(array_sorted, this->n, array_sorted[this->n - i]) > 1)
@@ -210,6 +242,160 @@ public: // доступно вне класса
             }
         }
         delete[] array_sorted;
-        throw (std::invalid_argument("the array is unique"));
+        throw(std::invalid_argument("the array is unique"));
+    }
+
+    T find_product_between_elements_index(int ind_min, int ind_max)
+    {
+        T product = 1;
+        if (ind_min < ind_max)
+        {
+            for (int i = ind_min; i < ind_max; i++)
+            {
+                product = product * this->arr[i];
+            }
+            return product;
+        }
+        if (ind_min > ind_max)
+        {
+            for (int i = ind_max; i < ind_min; i++)
+            {
+                product = product * this->arr[i];
+            }
+            return product;
+        }
+        else
+        {
+            throw std::invalid_argument("min is max");
+        }
+    }
+
+    int find_min_ind()
+    {
+        T abs_min = 1000000000000000000;
+        int ind = 0;
+        for (int i = 0; i < this->n; i++)
+        {
+            if (this->arr[i] < abs_min)
+            {
+                abs_min = this->arr[i];
+                ind = i;
+            }
+        }
+        return ind;
+    }
+
+    int find_max_ind()
+    {
+        T abs_max = -1000000000000000000;
+        int ind = 0;
+        for (int i = 0; i < this->n; i++)
+        {
+            if (this->arr[i] > abs_max)
+            {
+                abs_max = this->arr[i];
+                ind = i;
+            }
+        }
+        return ind;
+    }
+
+    int count_min()
+    {
+        T *arr_sorted = Data_array_worker::sort_array();
+        int counter = 1;
+        int i = 0;
+        while (arr_sorted[i] == arr_sorted[i + 1])
+        {
+            i++;
+            counter++;
+        }
+        delete[] arr_sorted;
+        return counter;
+    }
+
+    int count_max()
+    {
+        T *arr_sorted = Data_array_worker::sort_array();
+        int counter = 1;
+        int i = 0;
+        while (arr_sorted[this->n - i - 1] == arr_sorted[this->n - i - 2])
+        {
+            i++;
+            counter++;
+        }
+        delete[] arr_sorted;
+        return counter;
+    }
+
+    Arr_and_size<int> max_index_arr()
+    {
+        int *res = new int[Data_array_worker::count_max()];
+        T *arr_sorted = Data_array_worker::sort_array();
+        int i = 0;
+        while (arr_sorted[this->n - i - 1] == arr_sorted[this->n - i - 2])
+        {
+            res[i] = i;
+            i++;
+        }
+        res[i] = i;
+        return Arr_and_size<int>(res, i + 1);
+    }
+
+    Arr_and_size<int> min_index_arr()
+    {
+        int *res = new int[Data_array_worker::count_min()];
+        T *arr_sorted = Data_array_worker::sort_array();
+        int i = 0;
+        while (arr_sorted[i] == arr_sorted[i + 1])
+        {
+            res[i] = i;
+            i++;
+        }
+        res[i] = i;
+        return Arr_and_size<int>(res, i + 1);
+    }
+
+    void get_max_ind()
+    {
+        int tmp = ConsoleUI::get_index();
+        if (ArrayProcessor::valid_ind_dimension<int>(tmp, this->n))
+        {
+            this->ind_max = tmp;
+            return;
+        }
+        throw(std::invalid_argument("invalid index"));
+    }
+
+    void get_min_ind()
+    {
+        int tmp = ConsoleUI::get_index();
+        if (ArrayProcessor::valid_ind_dimension<int>(tmp, this->n))
+        {
+            this->ind_min = tmp;
+            return;
+        }
+        throw(std::invalid_argument("invalid index"));
+    }
+
+    T calculate_result_for_actions_if_min_or_max_count_more_1()
+    {
+        if (ArrayProcessor::valid_index_for_product_min_max(this->ind_max, this->ind_min))
+        {
+            return find_product_between_elements_index(this->ind_min, this->ind_max);
+        }
+        throw(std::invalid_argument("min and max in same index or radius lower than 3"));
+    }
+
+    T calculate_result_for_actions_for_process_2()
+    {
+        T *sorted_array = Data_array_worker::sort_array();
+        if (ArrayProcessor::valid_min_and_max_unique_for_sort_array(sorted_array, this->n))
+        {
+            delete[] sorted_array;
+            return find_product_between_elements_index(Data_array_worker::find_min_ind(), Data_array_worker::find_max_ind());
+        }
+        delete[] sorted_array;
+        throw(std::invalid_argument("Not valid"));
     }
 };

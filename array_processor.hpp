@@ -1,5 +1,6 @@
 #include "common_constants.hpp" // импор для namespace contains
 #include "validation_type.hpp"  // для ValidationType
+#include "sort_algorithm.hpp"
 #pragma once
 
 /*Статические методы - можно использовать без экзмепляра класса и не имеют доступа к this*/
@@ -30,12 +31,13 @@ public:
                 return false;
             }
             break;
-            // case ValidationType::FOR_PRODUCT: // для будущего использования
-            //     if (size < 3) {
-            //         // соответствующая ошибка
-            //         return false;
-            //     }
-            //     break;
+        case ValidationType::FOR_PRODUCT: // для будущего использования
+            if (size < 4)
+            {
+                // соответствующая ошибка
+                return false;
+            }
+            break;
         }
         return true;
     }
@@ -61,12 +63,12 @@ public:
                 return false;
             }
             break;
-            // case ValidationType::FOR_PRODUCT: // для будущего использования
-            //     if (size < 3) {
-            //         // соответствующая ошибка
-            //         return false;
-            //     }
-            //     break;
+        case ValidationType::FOR_PRODUCT: // для будущего использования
+            if (size < 4)
+            {
+                return false;
+            }
+            break;
         }
         return true;
     }
@@ -119,14 +121,6 @@ public:
         return valid_array_no_null(result_of_process_1);
     }
 
-    // функция для избежания бесконечной рекурсии
-    static bool should_stop_sort(int low, int high)
-    {
-        return low >= high; // проверка правильности границ массива.
-
-        /*Очевидно, что если массив начинается с индекса 5 и кончается индексом 0, то что то не так*/
-    }
-
     // функция проверки вхождения элемента в массив
     template <typename T>
     static bool in_arr(T *array, T elem, int size)
@@ -139,5 +133,57 @@ public:
             }
         }
         return false;
+    }
+
+    // фукнця проверки массива на валидность для поиска произведения между минимумом и максимумом
+    template <typename T>
+    static bool valid_for_product_min_max(T *arr, int n)
+    {
+        if (arr == nullptr)
+            return false;
+        int count_elements = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (arr[i] < 0)
+            {
+                count_elements++;
+            }
+        }
+        if (count_elements < 4)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    // фукнця проверки массива на валидность для поиска произведения между минимумом и максимумом
+    static bool valid_index_for_product_min_max(int ind_max, int ind_min)
+    {
+        if (ind_max < ind_min)
+        {
+            return (ind_min - ind_max) >= 3;
+        }
+        if (ind_min < ind_max)
+        {
+            return (ind_max - ind_min) >= 3;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    // проверка на едиенственность минимума и максимума
+    template <typename T>
+    static bool valid_min_and_max_unique_for_sort_array(T *sorted_array, int size)
+    {
+        return not((sorted_array[0] == sorted_array[1]) || (sorted_array[size - 1] == sorted_array[size - 2]));
+    }
+
+    // проверка индекса
+    template <typename T>
+    static bool valid_ind_dimension(int ind, int n)
+    {
+        return (-1 < ind < n);
     }
 };

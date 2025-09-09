@@ -1,12 +1,12 @@
-#include <iostream>                                   // ввыод/вывод
-#include "common_constants.hpp"                       // импор для namespace contains
-#include "console_ui.hpp"                             // импорт для работы с консольным интерфейсом
-#include "data_array_worker.hpp"         // класс для работы с массивами
-#include "data_file_worker.hpp"          // класс для работы с фалами
-#include "data_string_worker.hpp"        // класс для работы с строками
+#include <iostream>                        // ввыод/вывод
+#include "common_constants.hpp"            // импор для namespace contains
+#include "console_ui.hpp"                  // импорт для работы с консольным интерфейсом
+#include "data_array_worker.hpp"           // класс для работы с массивами
+#include "data_file_worker.hpp"            // класс для работы с фалами
+#include "data_string_worker.hpp"          // класс для работы с строками
 #include "error_type.hpp"                  // класс с типами ошибок
 #include "screen_console_options.hpp"      //для вариантов выбора сообщений
-#include "data_matrix_worker.hpp"        // для работы с матрицами
+#include "data_matrix_worker.hpp"          // для работы с матрицами
 #include "result_matrix_worker_struct.hpp" //струкутра для результатов matrix_worker
 
 using namespace std; // для доступа к функциям из std без написания std::
@@ -70,9 +70,82 @@ private: // методы доступные внутри класса
     }
 
     // функция для действия 2 задания 1 в терминале
-    void process_2_termina_exercise_1()
+    void process_2_terminal_exercise_1()
     {
-        /*ЗАХАР ВОТ ТУТ ТЕБЕ НАДО БУДЕТ ПИСАТЬ*/
+        ConsoleUI::clear_terminal();                                       // очищаем терминал перед работой
+        ConsoleUI::handler_screen_exercise_1(Exercise_1::DIMENSION_INPUT); // вывод собщения о вводе размерности
+        while (true)                                                       // пока ввод размерности не будет правильным
+        {
+            try
+            {
+                ex_1.get_validated_array_dimension_for_product(); // вызывает ввод размерности массива для экземпляра класса
+                break;
+            }
+            catch (const std::invalid_argument &e)
+            {
+                ConsoleUI::handler_error_message_dimension(Error_dimension_array::PRODUCT_ERROR);
+                continue;
+            }
+        }
+        ConsoleUI::clear_terminal();                                   // очищаем терминал для следующего сообщения
+        ConsoleUI::handler_screen_exercise_1(Exercise_1::ARRAY_INPUT); // вывод сообщщения о вводе элементов массива
+        ex_1.get_validated_array_for_product();                        // вызывае тввод элементов массива для экхемпляра класса
+        try
+        {
+            double tmp = ex_1.calculate_result_for_actions_for_process_2();
+            ConsoleUI::output_res_process_2_exercise_1(tmp);
+            ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возвращении на главный экран
+        }
+        catch (const std::invalid_argument &e)
+        {
+            ConsoleUI::max_index_choise_dialog<int>(ex_1.max_index_arr());
+            ConsoleUI::handler_screen_exercise_1(Exercise_1::IND_MAX_INPUT);
+            while (true)
+            {
+                try
+                {
+                    ex_1.get_max_ind();
+                    break;
+                }
+                catch (const std::invalid_argument &e)
+                {
+                    ConsoleUI::error_message_index();
+                    continue;
+                }
+            }
+            ConsoleUI::min_index_choise_dialog<int>(ex_1.min_index_arr());
+            ConsoleUI::handler_screen_exercise_1(Exercise_1::IND_MIN_INPUT);
+            while (true)
+            {
+                try
+                {
+                    ex_1.get_min_ind();
+                    break;
+                }
+                catch (const std::invalid_argument &e)
+                {
+                    ConsoleUI::error_message_index();
+                    continue;
+                }
+            }
+            ConsoleUI::clear_terminal();
+            try
+            {
+                double tmp = ex_1.calculate_result_for_actions_if_min_or_max_count_more_1();
+                ConsoleUI::output_res_process_2_exercise_1(tmp);
+                ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возвращении на главный экран
+            }
+            catch (const std::invalid_argument &e)
+            {
+                ConsoleUI::error_message_input_indices();
+                ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возвращении на главный экран
+            }
+        }
+        catch (const std::exception &e)
+        {
+            ConsoleUI::handler_error_main_app(App_error::UNKNOWN_ERROR);       // сообщение о ошибке данных массива
+            ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возвращении на главный экран
+        }
     }
 
     // функция для действия 3 задания 1 в терминале
@@ -207,7 +280,7 @@ private: // методы доступные внутри класса
                 process_1_terminal_exercise_1(); // запуск действия 1
                 return;                          // выход из While и switch - конец выполнения функции
             case 2:                              // к == 2 действие 2
-                /*ЗДЕСЬ ПОТОМ ДАПИСАТЬ ВТОРОЕ ДЕЙСТВИЕ*/
+                process_2_terminal_exercise_1();
                 return;                                                                 // выход из While и switch - конец выполнения функции
             case 3:                                                                     // к == 3 - действие 3
                 process_3_terminal_exercise_1();                                        // запуск действия 3

@@ -17,7 +17,8 @@ enum class Exercise_1
 {
     DIMENSION_INPUT,
     ARRAY_INPUT,
-    Action_3
+    IND_MAX_INPUT,
+    IND_MIN_INPUT
 };
 
 enum class Exercise_2

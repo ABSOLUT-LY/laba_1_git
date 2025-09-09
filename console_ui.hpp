@@ -1,9 +1,10 @@
-#include <iostream>                                   // ввыод/вывод
-#include "common_constants.hpp"                       // импор для namespace contains
+#include <iostream>                        // ввыод/вывод
+#include "common_constants.hpp"            // импор для namespace contains
 #include "error_type.hpp"                  // для ValidationType
-#include <istream>                                    // для getline
+#include <istream>                         // для getline
 #include "screen_console_options.hpp"      //для вариатнов выбора в консоли
 #include "result_matrix_worker_struct.hpp" //струкутра для результатов matrix_worker
+#include "result_array_worker_struct.hpp"
 
 #pragma once // предотвращает многократное включение этого файла при импорте
 
@@ -71,6 +72,16 @@ private:
         cout << "Enter matrix elements: " << endl;
     }
 
+    static void message_input_max_index()
+    {
+        cout << "Enter the index of the desired maximum element: " << endl;
+    }
+
+    static void message_input_min_index()
+    {
+        cout << "Enter the index of the desired minimum element: " << endl;
+    }
+
     // сообщение  ошибке колччества строк
     static void error_message_row_count()
     {
@@ -130,6 +141,11 @@ private:
     static void error_message_dimension_lower_than_1()
     {
         cout << "Dimension lower than 1 or greater than maximum buff: " << Constants::MAX_BUF << endl;
+    }
+
+    static void error_message_dimension_lower_than_4()
+    {
+        cout << "Dimension lower than 4 or greater than maximum buff: " << Constants::MAX_BUF << endl;
     }
 
     // вывод сообщения о ошибке символов
@@ -311,6 +327,13 @@ public:
         return column_count;
     }
 
+    static int get_index()
+    {
+        int index;
+        cin >> index;
+        return index;
+    }
+
     // ввод элементов матрицы
     template <typename T>
     static T **get_matrix_elements(int row_count, int column_count)
@@ -332,7 +355,8 @@ public:
     // ФУНКЦИИ ДЛЯ ВЫВОДА РЕЗУЛЬТАТОВ РАБОТЫ ПРОЦЕССОВ
 
     // вывод рещультата задачи 1 процесса 1
-    static void output_res_process_1_exercise_1(double *result_process_1, int negative_count)
+    template <typename T>
+    static void output_res_process_1_exercise_1(T *result_process_1, int negative_count)
     {
         // Вывод количества отрицательных элементов
         cout << "Number of negative elements \t" << result_process_1[negative_count + 1] << endl;
@@ -349,8 +373,39 @@ public:
         cout << endl;
     }
 
-    // вывод рещультата задачи 1 процесса 3
-    static void output_res_process_3_exercise_1(double *result_process_2, int n)
+    template <typename T>
+    static void min_index_choise_dialog(Arr_and_size<T> res)
+    {
+        cout << "Minimum indices: ";
+        for (int i = 0; i < res.size; i++)
+        {
+            cout << res.arr[i] << " ";
+        }
+        cout << endl;
+    }
+
+    template <typename T>
+    static void max_index_choise_dialog(Arr_and_size<T> res)
+    {
+        cout << "Maximum indices: ";
+        for (int i = 0; i < res.size; i++)
+        {
+            cout << res.arr[i] << " ";
+        }
+        cout << endl;
+    }
+
+    template <typename T>
+    // вывод рещультата задачи 2 процесса 3
+    static void output_res_process_2_exercise_1(T res)
+    {
+        cout << "Product of elements: ";
+        cout << res << endl;
+    }
+
+    // вывод рещультата задачи 3 процесса 3
+    template <typename T>
+    static void output_res_process_3_exercise_1(T *result_process_2, int n)
     {
         cout << "Sorted array using Quicksort method: ";
         for (int i = 0; i < n; i++)
@@ -426,6 +481,13 @@ public:
             break;
         case Exercise_1::DIMENSION_INPUT:
             message_input_dimension_array();
+            break;
+        case Exercise_1::IND_MAX_INPUT:
+            message_input_max_index();
+            break;
+        case Exercise_1::IND_MIN_INPUT:
+            message_input_min_index();
+            break;
         default:
             break;
         }
@@ -504,7 +566,20 @@ public:
         case Error_dimension_array::SORT_ERROR:
             error_message_dimension_lower_than_1(); // размерность меньше 1 или более буфера- нельзя сортировать
             return;
+        case Error_dimension_array::PRODUCT_ERROR:
+            error_message_dimension_lower_than_4();
+            return;
         }
+    }
+
+    static void error_message_index()
+    {
+        cout << "Invalid index" << endl;
+    }
+
+    static void error_message_input_indices()
+    {
+        cout << "Error the distance between selected indices must be more than 3" << endl;
     }
 
     static void handler_error_message_dimension_matrix(Error_dimension_matrix type_error)
