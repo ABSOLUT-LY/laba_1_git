@@ -39,6 +39,7 @@ private:
     {
         cout << "Enter the file name, without spaces, in English only, specifying its type." << endl
              << "A maximum of 1024 characters will be read" << endl
+             << "the file must be in the park es project!" << endl
              << "Example:<example.txt>" << endl;
     }
 
