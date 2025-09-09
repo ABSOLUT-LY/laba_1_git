@@ -1,6 +1,5 @@
 #include "common_constants.hpp" // импор для namespace contains
 #include "error_type.hpp"       // для ValidationType
-#include "console_ui.hpp"       // Для вывода сообщений в консоль
 #include <fstream>              // для работы с файлами
 
 #pragma once
@@ -18,7 +17,6 @@ public:
         {
             return true;
         }
-        ConsoleUI::handler_error_file_message(Error_file::FILE_DOES_NOT_EXIST);
         return false;
     }
 
@@ -39,7 +37,6 @@ public:
         {
             return true;
         }
-        ConsoleUI::handler_error_file_message(Error_file::FILE_DOES_NOT_EXIST);
         return false;
     }
 
@@ -49,7 +46,6 @@ public:
         // Проверка на нулевой указатель или пустую строку
         if (filename == nullptr || filename[0] == '\0')
         {
-            ConsoleUI::handler_error_file_message(Error_file::FILE_NAME_ERROR);
             return false;
         }
 
@@ -62,14 +58,12 @@ public:
             if (c == '<' || c == '>' || c == ':' || c == '"' ||
                 c == '/' || c == '\\' || c == '|' || c == '?' || c == '*')
             {
-                ConsoleUI::handler_error_file_message(Error_file::FILE_NAME_ERROR);
                 return false;
             }
 
             // Проверка на пробелы и управляющие символы (ASCII < 32)
             if (c <= 32)
             {
-                ConsoleUI::handler_error_file_message(Error_file::FILE_NAME_ERROR);
                 return false;
             }
 
@@ -79,7 +73,6 @@ public:
                   (c >= '0' && c <= '9') || // цифры
                   c == '-' || c == '_' || c == '.'))
             { // разрешенные символы
-                ConsoleUI::handler_error_file_message(Error_file::FILE_NAME_ERROR);
                 return false;
             }
 

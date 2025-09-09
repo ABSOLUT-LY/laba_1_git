@@ -1,7 +1,7 @@
-#include <iostream>                        // ввыод/вывод
-#include "common_constants.hpp"            // импор для namespace contains
+#include <iostream>                                   // ввыод/вывод
+#include "common_constants.hpp"                       // импор для namespace contains
 #include "error_type.hpp"                  // для ValidationType
-#include <istream>                         // для getline
+#include <istream>                                    // для getline
 #include "screen_console_options.hpp"      //для вариатнов выбора в консоли
 #include "result_matrix_worker_struct.hpp" //струкутра для результатов matrix_worker
 
@@ -372,7 +372,7 @@ public:
     }
 
     template <typename T>
-    static void output_res_process_2_exercise_2(MaxElemAndIndex <T> result)
+    static void output_res_process_2_exercise_2(MaxElemAndIndex<T> result)
     {
         cout << "The maximum element of a matrix that occurs more than once: " << result.max_elem << endl;
         cout << "Coordinates: Х = " << result.index_x << " Y = " << result.index_y << endl;

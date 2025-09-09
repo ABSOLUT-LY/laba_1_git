@@ -1,6 +1,5 @@
 #include "common_constants.hpp" // импор для namespace contains
 #include "error_type.hpp"       // для ValidationType
-#include "console_ui.hpp"       // Для вывода сообщений в консоль
 #pragma once
 /*Статические методы - можно использовать без экзмепляра класса и не имеют доступа к this*/
 
@@ -84,13 +83,13 @@ public:
         // если в строке не необходимое количество преложений
         if (!valid_count_sentences(str, Constants::MAX_COUNT_SENTENCES))
         {
-            ConsoleUI::handler_error_messge_string_content(Error_string::COUNT_SENTENCES_ERROR);
+            // ConsoleUI::handler_error_messge_string_content(Error_string::COUNT_SENTENCES_ERROR);
             return false;
         }
         // если в строке не валидные символы
         if (!valid_symbols_in_string(str))
         {
-            ConsoleUI::handler_error_messge_string_content(Error_string::SYMBOLS_ERROR);
+            // ConsoleUI::handler_error_messge_string_content(Error_string::SYMBOLS_ERROR);
             return false;
         }
         // иаче все корректно

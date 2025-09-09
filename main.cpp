@@ -1,14 +1,12 @@
-#include <iostream>                        // ввыод/вывод
-#include "common_constants.hpp"            // импор для namespace contains
-#include "console_ui.hpp"                  // импорт для работы с консольным интерфейсом
-#include "array_processor.hpp"             // импорт для проверки данных на валидность
-#include "data_array_worker.hpp"           // класс для работы с массивами
-#include "data_file_worker.hpp"            // класс для работы с фалами
-#include "data_string_worker.hpp"          // класс для работы с строками
-#include "string_processor.hpp"            // класс для проверки валдности строк
+#include <iostream>                                   // ввыод/вывод
+#include "common_constants.hpp"                       // импор для namespace contains
+#include "console_ui.hpp"                             // импорт для работы с консольным интерфейсом
+#include "data_array_worker.hpp"         // класс для работы с массивами
+#include "data_file_worker.hpp"          // класс для работы с фалами
+#include "data_string_worker.hpp"        // класс для работы с строками
 #include "error_type.hpp"                  // класс с типами ошибок
 #include "screen_console_options.hpp"      //для вариантов выбора сообщений
-#include "data_matrix_worker.hpp"          // для работы с матрицами
+#include "data_matrix_worker.hpp"        // для работы с матрицами
 #include "result_matrix_worker_struct.hpp" //струкутра для результатов matrix_worker
 
 using namespace std; // для доступа к функциям из std без написания std::
@@ -249,8 +247,20 @@ private: // методы доступные внутри класса
     {
         ConsoleUI::clear_terminal();                                 // очистка терминала перед началом работы
         ConsoleUI::handler_screen_exercise_3(Exercise_3::FILE_NAME); // ввод имени файла
-        f_3.get_file_name();                                         // получение имени файла классом файла
-        ConsoleUI::clear_terminal();                                 // очистка терминала перед началом работы
+        while (true)
+        {
+            try
+            {
+                f_3.get_file_name(); // получение имени файла классом файла
+                break;
+            }
+            catch (std::invalid_argument)
+            {
+                ConsoleUI::handler_error_file_message(Error_file::FILE_NAME_ERROR);
+                continue;
+            }
+        }
+        ConsoleUI::clear_terminal(); // очистка терминала перед началом работы
         try
         {
             char *text = f_3.read_file(); // чтение из файла

@@ -1,7 +1,7 @@
 #include "matrix_processor.hpp"            // для доступа к логике
-#include "console_ui.hpp"                  // импорт для работы с консольным интерфейсом
+#include "console_ui.hpp"                 // импорт для работы с консольным интерфейсом
 #include "result_matrix_worker_struct.hpp" // для структуры резульата
-#include "data_array_worker.hpp"           //для методов массива
+#include "data_array_worker.hpp"                         //для методов массива
 
 #pragma once
 template <typename T>
@@ -10,7 +10,7 @@ class Data_matrix_worker
 private:
     int row_count;                // Колчиество строк
     int column_count;             // колчисетво стлобцов
-    T **matrix;              // сама матрица
+    T **matrix;                   // сама матрица
     int count_zeros_contain_rows; // колчиество строк, содержащих 0
 
     // поиск колества строк не содрежащих нулевых жлементов

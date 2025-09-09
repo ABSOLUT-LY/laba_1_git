@@ -50,17 +50,15 @@ public:
     // ввод имени файла
     void get_file_name()
     {
-        while (true)
+        char *tmp = ConsoleUI::get_file_name();  // записываем имя файла в временную переменную
+        if (FileProcessor::valid_file_name(tmp)) // если валидно - присваиваем
         {
-            char *tmp = ConsoleUI::get_file_name();  // записываем имя файла в временную переменную
-            if (FileProcessor::valid_file_name(tmp)) // если валидно - присваиваем
-            {
-                delete[] this->name;
-                this->name = tmp;
-                return;
-            }
-            delete[] tmp; // иначе - отпускаем
-            this->name = nullptr;
+            delete[] this->name;
+            this->name = tmp;
+            return;
         }
+        delete[] tmp; // иначе - отпускаем
+        this->name = nullptr;
+        throw std::invalid_argument("filename error");
     }
 };
