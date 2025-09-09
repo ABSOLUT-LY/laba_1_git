@@ -151,6 +151,7 @@ public:
             result.max_elem = elem;
             result.index_x = coordinates[0];
             result.index_y = coordinates[1];
+            delete[] coordinates;
             return result;
         }
         else
