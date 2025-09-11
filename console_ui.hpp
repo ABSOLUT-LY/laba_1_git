@@ -248,6 +248,7 @@ private:
             cout << endl
                  << "Do you want return on main screen [Y/N]?" << endl;
             cin >> letter;
+            clean_input_stream();
             switch (letter)
             {
             case 'Y':
@@ -277,6 +278,14 @@ private:
     }
 
 public:
+    // очистка ввода
+    static void clean_input_stream()
+    {
+        while (cin.get() != '\n')
+        {
+            continue;
+        }
+    }
     // Очистка терминала
     static void clear_terminal()
     {
@@ -305,9 +314,10 @@ public:
     static char *get_file_name()
     {
         char *arr = new char[Constants::MAX_BUFF_STRING];
-        cin.clear();
-        cin.ignore(Constants::MAX_BUFF_STRING, '\n');
+        // cin.clear();
+        // cin.ignore(Constants::MAX_BUFF_STRING, '\n');
         cin.getline(arr, Constants::MAX_BUFF_STRING + 1);
+        clean_input_stream();
         return arr;
     }
 
