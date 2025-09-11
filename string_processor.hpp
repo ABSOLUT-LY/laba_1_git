@@ -96,6 +96,16 @@ public:
         return true;
     }
 
+    // проверка на то что стркоа не пустая
+    static bool string_is_empty(char *str)
+    {
+        if (valid_count_sentences(str, 0))
+        {
+            return true;
+        }
+        return false;
+    }
+
     // проверка что резултат для вывода корректен
     static bool valid_output_of_exercise_3(char *str)
     {

@@ -2,6 +2,7 @@
 #include "string_processor.hpp" // импорт для проверки данных на валидность
 #include "validation_type.hpp"  // для ValidationType
 #include "console_ui.hpp"       // импорт для работы с консольным интерфейсом
+#include "error_type.hpp"
 
 #pragma once
 
@@ -34,9 +35,18 @@ public:
         }
         else
         {
-            this->str = nullptr; // причаиваем nullptr елсли строка не прошла
-            throw std::invalid_argument("Dont read string");
-            return; // выходим
+            if (StringProcessor::string_is_empty(tmp))
+            {
+                this->str = nullptr; // причаиваем nullptr елсли строка не прошла
+                throw std::runtime_error("string is empty");
+                return;
+            }
+            else
+            {
+                this->str = nullptr; // причаиваем nullptr елсли строка не прошла
+                throw std::invalid_argument("Dont read string");
+                return;
+            } // выходим
         }
     }
 

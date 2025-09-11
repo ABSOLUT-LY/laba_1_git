@@ -211,9 +211,18 @@ private: // методы доступные внутри класса
         ConsoleUI::handler_screen_exercise_2(Exercise_2::MATRIX_INPUT);
         ex_2.get_matrix_elements();
         ConsoleUI::clear_terminal();
-        ZeroFreeRowIndexes result = ex_2.calculate_result_action_1();
-        ConsoleUI::output_res_process_1_exercise_2(result, ex_2.get_count_zeros_contain_rows());
-        ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возврщении на главный экран
+
+        try
+        {
+            ZeroFreeRowIndexes result = ex_2.calculate_result_action_1();
+            ConsoleUI::output_res_process_1_exercise_2(result, ex_2.get_count_zeros_contain_rows());
+            ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возврщении на главный экран
+        }
+        catch (const std::invalid_argument &e)
+        {
+            ConsoleUI::handler_error_message_matrix_content(Error_matrix::NO_ZEROS_ROWS);
+            ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG); // диалог о возврщении на главный экран
+        }
     }
 
     void process_2_terminal_exercise_2()
@@ -269,11 +278,12 @@ private: // методы доступные внутри класса
     void screen_exercise_1_terminal() // экран выбора действия в задании 1
     {
         ConsoleUI::clear_terminal();                          // очистка терминала перед началом работы
-        int k = 0;                                            // Номер оперцаии
+        char k = 0;                                           // Номер оперцаии
         ConsoleUI::handler_screen_programm(AppOptions::EX_1); // вывод сообщений с возможными действиями
         while (true)                                          // бесконечный цикл для возможности многократного ввода пользователем
         {
             cin >> k; // ввод номера действия
+            k = (int)k - 48;
             switch (k)
             {
             case 1:                              // к == 1 действие 1
@@ -295,11 +305,12 @@ private: // методы доступные внутри класса
     void screen_exercise_2_terminal()
     {
         ConsoleUI::clear_terminal();                          // очистка терминала перед началом работы
-        int k = 0;                                            // Номер оперцаии
+        char k = 0;                                           // Номер оперцаии
         ConsoleUI::handler_screen_programm(AppOptions::EX_2); // вывод сообщений с возможными действиями
         while (true)                                          // бесконечный цикл для возможности многократного ввода пользователем
         {
             cin >> k; // ввод номера действия
+            k = (int)k - 48;
             switch (k)
             {
             case 1:                              // к == 1 действие 1
@@ -316,7 +327,7 @@ private: // методы доступные внутри класса
     }
 
     // задание 3
-    void screen_exercise_3_terminal() // экран выбора действия в задании 3
+    void screen_exercise_3_terminal() // экран выбора действия в задании 3sz
     {
         ConsoleUI::clear_terminal();                                 // очистка терминала перед началом работы
         ConsoleUI::handler_screen_exercise_3(Exercise_3::FILE_NAME); // ввод имени файла
@@ -349,6 +360,11 @@ private: // методы доступные внутри класса
                 ConsoleUI::handler_error_messge_string_content(Error_string::CONTENT_STRING_ERROR); // если файла нет - пишем, что нет
                 ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG);                  // диалог о возврщении на главный экран
             }
+            catch (const std::runtime_error &e)
+            {
+                ConsoleUI::handler_error_messge_string_content(Error_string::STRING_EMPTY); // если файла нет - пишем, что нет
+                ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN_DIALOG);
+            }
             catch (const std::exception &e)
             {
                 ConsoleUI::handler_error_main_app(App_error::UNKNOWN_ERROR);       // сообщение о ошибке данных массива
@@ -370,11 +386,12 @@ private: // методы доступные внутри класса
     // создание начального экрана
     void terminal_process()
     {
-        int k = 0;                                                  // Номер задания
+        char k = 0;                                                 // Номер задания
         ConsoleUI::handler_screen_programm(AppOptions::HOMESCREEN); // Ввывод сообщния дял выбора пользователем действия
         while (true)                                                // бесконечный цикл для возможности многократного ввода пользователем
         {
             cin >> k; // ввод номера действия
+            k = (int)k - 48;
             switch (k)
             {
             case 1:                           // к == 1 действие 1

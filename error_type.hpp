@@ -19,6 +19,7 @@ enum class Error_string
     SYMBOLS_ERROR,         // 0 - ошибка символов
     CONTENT_STRING_ERROR,  // 1
     COUNT_SENTENCES_ERROR, // 2 - ошибка количетсва предложений
+    STRING_EMPTY
 };
 
 // ДЛЯ ФАЙЛОВ
@@ -50,4 +51,5 @@ enum class Error_dimension_matrix
 enum class Error_matrix
 {
     INVALID_MATRIX_FOR_FIND_SUM,
+    NO_ZEROS_ROWS
 };

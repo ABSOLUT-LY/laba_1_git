@@ -1,7 +1,7 @@
 #include "matrix_processor.hpp"            // для доступа к логике
-#include "console_ui.hpp"                 // импорт для работы с консольным интерфейсом
+#include "console_ui.hpp"                  // импорт для работы с консольным интерфейсом
 #include "result_matrix_worker_struct.hpp" // для структуры резульата
-#include "data_array_worker.hpp"                         //для методов массива
+#include "data_array_worker.hpp"           //для методов массива
 
 #pragma once
 template <typename T>
@@ -119,6 +119,10 @@ public:
     ZeroFreeRowIndexes calculate_result_action_1()
     {
         this->count_zeros_contain_rows = Data_matrix_worker::find_count_row_not_contain_zeros();
+        if (this->count_zeros_contain_rows == 0)
+        {
+            throw std::invalid_argument("all row contain zeros");
+        }
         return ZeroFreeRowIndexes(Data_matrix_worker::find_index_row_not_contain_zeros(), this->count_zeros_contain_rows);
     }
 

@@ -101,6 +101,11 @@ private:
         cout << "The array is unique, it is impossible to complete the task" << endl;
     }
 
+    static void error_matrix_has_no_rows_contained_zeros()
+    {
+        cout << "There are all matrix rows containing zeros." << endl;
+    }
+
     // сообщение о ошибке наличия негативных элементов
     static void
     error_message_negative_count(int nc)
@@ -159,6 +164,12 @@ private:
     static void error_message_senteces_count()
     {
         cout << "Error: expected " << Constants::MAX_COUNT_SENTENCES << " strings" << endl;
+    }
+
+    // вывод сообщения о ошибке колчиества строк
+    static void error_message_string_in_file_is_empty()
+    {
+        cout << "Error: file is empty" << endl;
     }
 
     // вывод сообщения о ошибке строки
@@ -605,6 +616,9 @@ public:
         case Error_matrix::INVALID_MATRIX_FOR_FIND_SUM:
             error_matrix_is_unique();
             break;
+        case Error_matrix::NO_ZEROS_ROWS:
+            error_matrix_has_no_rows_contained_zeros();
+            break;
         default:
             break;
         }
@@ -636,6 +650,9 @@ public:
             break;
         case Error_string::SYMBOLS_ERROR:
             error_message_symbols();
+            break;
+        case Error_string::STRING_EMPTY:
+            error_message_string_in_file_is_empty();
             break;
         default:
             break;
