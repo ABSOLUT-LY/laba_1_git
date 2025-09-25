@@ -1,5 +1,5 @@
-#include "common_constants.hpp" // импор для namespace contains
-#include "error_type.hpp"       // для ValidationType
+#include "../main_folder/common_constants.hpp" // импор для namespace contains
+#include "../core_types/error_type.hpp"       // для ValidationType
 #pragma once
 /*Статические методы - можно использовать без экзмепляра класса и не имеют доступа к this*/
 

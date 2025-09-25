@@ -1,8 +1,8 @@
 #include <fstream>              // для работы с файлами
-#include "common_constants.hpp" // для констант
+#include "../main_folder/common_constants.hpp" // импорт для namespace contains
 #include <istream>              // для getline
-#include "console_ui.hpp"       // для данных с консоли
-#include "file_processor.hpp"   // для валидации
+#include "../main_folder/console_ui.hpp"       // для данных с консоли
+#include "../processors/file_processor.hpp"   // для валидации
 
 #pragma once
 

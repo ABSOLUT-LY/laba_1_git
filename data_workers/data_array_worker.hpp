@@ -1,9 +1,9 @@
-#include "common_constants.hpp" // импорт для namespace contains
-#include "array_processor.hpp"  // импорт для проверки данных на валидность
-#include "sort_algorithm.hpp"   // для доступа к алгоритмам сортировки
-#include "validation_type.hpp"  // для ValidationType
-#include "console_ui.hpp"       // импорт для работы с консольным интерфейсом
-#include "result_array_worker_struct.hpp"
+#include "../main_folder/common_constants.hpp" // импорт для namespace contains
+#include "../processors/array_processor.hpp"  // импорт для проверки данных на валидность
+#include "../helpers/sort_algorithm.hpp"   // для доступа к алгоритмам сортировки
+#include "../core_types/validation_type.hpp"  // для ValidationType
+#include "../main_folder/console_ui.hpp"       // импорт для работы с консольным интерфейсом
+#include "../structures/result_array_worker_struct.hpp"
 #pragma once // предотвращает многократное включение этого файла при импорте
 
 /*Здесь хранятся только методы работы с данными класса и данные класса*/

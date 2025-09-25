@@ -1,4 +1,4 @@
-#include "common_constants.hpp" // для доступа к константам
+#include "../main_folder/common_constants.hpp" // для доступа к константам
 #pragma once
 
 /*Статические методы - можно использовать без экзмепляра класса и не имеют доступа к this*/

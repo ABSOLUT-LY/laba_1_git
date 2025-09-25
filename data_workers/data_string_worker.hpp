@@ -1,8 +1,8 @@
-#include "common_constants.hpp" // импорт для namespace contains
-#include "string_processor.hpp" // импорт для проверки данных на валидность
-#include "validation_type.hpp"  // для ValidationType
-#include "console_ui.hpp"       // импорт для работы с консольным интерфейсом
-#include "error_type.hpp"
+#include "../main_folder/common_constants.hpp" // импорт для namespace contains
+#include "../processors/string_processor.hpp" // импорт для проверки данных на валидность
+#include "../core_types/validation_type.hpp"  // для ValidationType
+#include "../main_folder/console_ui.hpp"       // импорт для работы с консольным интерфейсом
+#include "../core_types/error_type.hpp"
 
 #pragma once
 

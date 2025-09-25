@@ -1,6 +1,6 @@
-#include "common_constants.hpp" // импор для namespace contains
-#include "validation_type.hpp"  // для ValidationType
-#include "sort_algorithm.hpp"
+#include "../main_folder/common_constants.hpp" // импор для namespace contains
+#include "../core_types/validation_type.hpp"  // для ValidationType
+#include "../helpers/sort_algorithm.hpp"
 #pragma once
 
 /*Статические методы - можно использовать без экзмепляра класса и не имеют доступа к this*/

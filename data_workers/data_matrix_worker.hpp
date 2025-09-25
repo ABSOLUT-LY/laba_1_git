@@ -1,7 +1,7 @@
-#include "matrix_processor.hpp"            // для доступа к логике
-#include "console_ui.hpp"                  // импорт для работы с консольным интерфейсом
-#include "result_matrix_worker_struct.hpp" // для структуры резульата
-#include "data_array_worker.hpp"           //для методов массива
+#include "../processors/matrix_processor.hpp"            // для доступа к логике
+#include "../main_folder/console_ui.hpp"                  // импорт для работы с консольным интерфейсом
+#include "../structures/result_matrix_worker_struct.hpp" // для структуры резульата
+#include "../data_workers/data_array_worker.hpp"           //для методов массива
 
 #pragma once
 template <typename T>

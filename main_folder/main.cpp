@@ -1,13 +1,13 @@
 #include <iostream>                        // ввыод/вывод
 #include "common_constants.hpp"            // импор для namespace contains
 #include "console_ui.hpp"                  // импорт для работы с консольным интерфейсом
-#include "data_array_worker.hpp"           // класс для работы с массивами
-#include "data_file_worker.hpp"            // класс для работы с фалами
-#include "data_string_worker.hpp"          // класс для работы с строками
-#include "error_type.hpp"                  // класс с типами ошибок
-#include "screen_console_options.hpp"      //для вариантов выбора сообщений
-#include "data_matrix_worker.hpp"          // для работы с матрицами
-#include "result_matrix_worker_struct.hpp" //струкутра для результатов matrix_worker
+#include "../data_workers/data_array_worker.hpp"           // класс для работы с массивами
+#include "../data_workers/data_file_worker.hpp"            // класс для работы с фалами
+#include "../data_workers/data_string_worker.hpp"          // класс для работы с строками
+#include "../core_types/error_type.hpp"                  // класс с типами ошибок
+#include "../core_types/screen_console_options.hpp"      //для вариантов выбора сообщений
+#include "../data_workers/data_matrix_worker.hpp"          // для работы с матрицами
+#include "../structures/result_matrix_worker_struct.hpp" //струкутра для результатов matrix_worker
 
 using namespace std; // для доступа к функциям из std без написания std::
 

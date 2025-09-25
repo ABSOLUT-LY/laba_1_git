@@ -1,10 +1,10 @@
 #include <iostream>                        // ввыод/вывод
 #include "common_constants.hpp"            // импор для namespace contains
-#include "error_type.hpp"                  // для ValidationType
+#include "../core_types/error_type.hpp"                  // для ValidationType
 #include <istream>                         // для getline
-#include "screen_console_options.hpp"      //для вариатнов выбора в консоли
-#include "result_matrix_worker_struct.hpp" //струкутра для результатов matrix_worker
-#include "result_array_worker_struct.hpp"
+#include "../core_types/screen_console_options.hpp"      //для вариатнов выбора в консоли
+#include "../structures/result_matrix_worker_struct.hpp" //струкутра для результатов matrix_worker
+#include "../structures/result_array_worker_struct.hpp"
 
 #pragma once // предотвращает многократное включение этого файла при импорте
 
