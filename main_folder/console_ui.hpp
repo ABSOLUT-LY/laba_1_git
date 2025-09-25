@@ -317,7 +317,7 @@ public:
         // cin.clear();
         // cin.ignore(Constants::MAX_BUFF_STRING, '\n');
         cin.getline(arr, Constants::MAX_BUFF_STRING + 1);
-        clean_input_stream();
+        // clean_input_stream();
         return arr;
     }
 
